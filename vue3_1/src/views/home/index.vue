@@ -3,7 +3,7 @@
     <div v-for="item in planList" :key="item._id">
       <span style="margin-right: 10px">{{ item.date }}</span>
       <span style="margin-right: 10px">{{ item.time }}</span>
-      <span>{{ item.content }}</span>
+        <span>{{ item.content }}</span>
     </div>
   </div>
 </template>
