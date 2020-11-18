@@ -1,4 +1,6 @@
+import { effect } from './reactivity'
 import { nodeOps } from './runtime-dom'
+export * from './reactivity'
 
 export function render(vnode, container){
   patch(null, vnode, container)
@@ -29,9 +31,12 @@ function mountComponent(vnode, container){
   }
   const Component = vnode.tag
   instance.render = Component.setup(vnode.props, instance)
-  // 如果返回的的是对象，将template编译成render函数
-  instance.subTree = instance.render && instance.render()
-  patch(null, instance.subTree, container)
+  // 组件单独effect，这样当组件数据更新的时候，只会更新当前组件，而不会更新父组件
+  effect(() => {
+    // 如果返回的的是对象，将template编译成render函数
+    instance.subTree = instance.render && instance.render()
+    patch(null, instance.subTree, container)
+  })
 }
 
 function mountElement(vnode, container){
@@ -61,6 +66,3 @@ function mountChildren(children, container){
   }
 }
 
-function Vue(){
-  this.render = render
-}

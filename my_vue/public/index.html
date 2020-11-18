@@ -1,59 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   <div id="app"></div>
   <script src="./index.js"></script>
   <script>
-    const { render } = Vue
-    const state = {
-      count: 0
-    }
+    const {
+      render,
+      effect,
+      reactive
+    } = Vue
+
+    const state = reactive({
+      count: 0,
+      name: '测试'
+    })
+
     const myComp = {
-      setup(){
+      setup() {
         // 如果没有返回函数，会将template编译成render函数
         return () => { // render函数
           return {
             tag: 'div',
             props: {
-              style: { color: 'pink' }
+              style: {
+                color: 'pink'
+              }
             },
-            children: '我是一个自定义组件' + state.count
+            children: [
+              {
+                tag: 'p',
+                children: '我是一个自定义组件' + state.name
+              },
+              {
+                tag: 'button',
+                props: {
+                  onClick: () => state.name = '测试2'
+                },
+                children: '组件点我啊'
+              }
+            ]
           }
         }
       }
     }
 
-    const vnode = {
-      tag: 'div',
-      props: { style: { border: '1px solid yellow' } },
-      children: [
-        {
-          tag: 'p',
-          props: { style: { color: 'blue' } },
-          children: 'vue@3 - 计数器' + state.count
-        },
-        {
-          tag: 'button',
-          props: {
-            onClick: () => alert(state.count)
-          },
-          children: '点我啊'
-        },
-        {
-          tag: myComp,
-          props: null,
-          children: '' // 组件的插槽
-        }
-      ],
-    }
     const app = document.querySelector('#app')
-    render(vnode, app)
 
+    effect(() => {
+      const vnode = {
+        tag: 'div',
+        props: {
+          style: {
+            border: '1px solid yellow'
+          }
+        },
+        children: [{
+            tag: 'p',
+            props: {
+              style: {
+                color: 'blue'
+              }
+            },
+            children: 'vue@3 - 计数器' + state.name
+          },
+          {
+            tag: 'button',
+            props: {
+              onClick: () => {
+                // state.count++
+                state.name = '测试1'
+              }
+            },
+            children: '点我啊'
+          },
+          {
+            tag: myComp,
+            props: null,
+            children: '' // 组件的插槽
+          }
+        ],
+      }
+      render(vnode, app)
+    })
   </script>
 </body>
+
 </html>
