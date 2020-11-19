@@ -18,17 +18,27 @@ export const nodeOps = {
   hostSetElementText(el, text){
     el.textContent = text
   },
-  hostPatchProps(el, key, value){
+  hostPatchProps(el, key, prevProps, nextProps){
     if(/^on[a-z]+/i.test(key)){ // 事件
       const eventName = key.slice(2).toLowerCase()
-      el.addEventListener(eventName, value)
+      // 更新事件
+      prevProps && el.removeEventListener(eventName, prevProps)
+      nextProps && el.addEventListener(eventName, nextProps)
     } else {
+      if(nextProps == null){
+        return el.removeAttribute(key) // 删除元素上的属性
+      }
       if(key === 'style'){
-        for (const k in value) {
-          el.style[k] = value[k]
+        for (const k in nextProps) {
+          el.style[k] = nextProps[k]
+        }
+        for (const k in prevProps) {
+          if(!nextProps.hasOwnProperty(k)){
+            el.style[k] = null
+          }
         }
       } else { // id class
-        el.setAttribute(key, value)
+        el.setAttribute(key, nextProps)
       }
     }
   },
