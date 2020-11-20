@@ -12,6 +12,7 @@ function getSequence(arr) {
       if (arrI > arr[j]) {
         p[i] = j // 将当前最后一项 放到p对应的索引上
         result.push(i)
+        continue
       }
       // 二分查找 
       u = 0
