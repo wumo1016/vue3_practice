@@ -17,26 +17,26 @@ export function render(vnode, container) {
  * @param container: 容器
  */
 
-function patch(n1, n2, container) {
+function patch(n1, n2, container, anchor) {
 
   if (typeof n2.tag === 'string') {
     // 标签渲染 1.初次渲染 2.diff操作
-    processElement(n1, n2, container)
+    processElement(n1, n2, container, anchor)
   } else if (typeof n2.tag === 'object') {
     // 组件渲染
     mountComponent(n2, container)
   }
 }
 
-function processElement(n1, n2, container) {
+function processElement(n1, n2, container, anchor) {
   if (n1 == null) {
-    mountElement(n2, container)
+    mountElement(n2, container, anchor)
   } else {
     patchElement(n1, n2, container)
   }
 }
 
-function mountElement(vnode, container) {
+function mountElement(vnode, container, anchor) {
   const {
     tag,
     props,
@@ -57,7 +57,7 @@ function mountElement(vnode, container) {
     nodeOps.hostSetElementText(el, children)
   }
   // 最后将最外层dom挂载到传入的容器中
-  nodeOps.insert(el, container)
+  nodeOps.insert(el, container, anchor)
 }
 
 function mountChildren(children, container) {
@@ -72,7 +72,6 @@ function patchElement(n1, n2, container) {
   const oldProps = n1.props
   const newProps = n2.props
   patchProps(el, oldProps, newProps)
-
   // 比对元素中的孩子
   patchChildren(n1, n2, el)
 }
@@ -126,28 +125,37 @@ function patchKeyedChildren(c1, c2, container) {
     const currentEle = c2[i];
     keyedToNewIndexMap.set(currentEle.props.key, i)
   }
-  // 2.去老的里面找 看看有没有对应的,如果有一样的就复用老的,没有就删除老的
+  // 2.更新已有元素的属性，并将新的没有的老元素删除
+  const newIndexToOldIndexMap = new Array(e2 + 1).fill(-1)
   for (let i = 0; i <= e1; i++) {
     const oldVnode = c1[i];
     const newIndex = keyedToNewIndexMap.get(oldVnode.props.key)
-    if(newIndex == undefined){
+    if (newIndex == undefined) {
       // 老的有 新的没有，就移除
       nodeOps.remove(oldVnode.el)
     } else {
-      // 复用 更新属性
+      // 复用(将新 newVnode.el = oldVnode.el )以便将来移动，更新属性
+      newIndexToOldIndexMap[newIndex] = i + 1
       patch(oldVnode, c2[newIndex], container)
     }
   }
-  // key一样 移动操作 从后往前插入
-  for (let i = e2; index >= 0; i--) {
-    const anchor = i + 1 <= e2 ? c2[i+1].el : null
-    
+  // 根据最长递增子序列 来确定不需要移动的索引
+  const sequence = getSequence(newIndexToOldIndexMap)
+  let j = sequence.length - 1 // 获取末尾索引
+  // 3.key一样 移动操作 从后往前插入
+  for (let i = e2; i >= 0; i--) {
+    let currentEle = c2[i].el
+    const anchor = i + 1 <= e2 ? c2[i + 1].el : null
+    if (newIndexToOldIndexMap[i] === -1) { // 这是一个新元素
+      patch(null, c2[i], container, anchor)
+    } else {
+      if (i === sequence[j]) { // 过滤掉不需要移动的索引
+        j--
+      } else { // 移动/插入
+        nodeOps.insert(currentEle, container, anchor)
+      }
+    }
   }
-
-
-
-  // 3.新的比老的多 就添加 老的比新的多就删除
-  // 4.两个key一样，就对比属性，移动
 }
 
 function mountComponent(vnode, container) {
@@ -165,4 +173,47 @@ function mountComponent(vnode, container) {
     instance.subTree = instance.render && instance.render()
     patch(null, instance.subTree, container)
   })
+}
+
+// 获取最长子序列的索引数组
+function getSequence(arr) {
+  const p = arr.slice() //  保存原始数据
+  const result = [0] //  存储最长增长子序列的索引数组
+  let i, j, u, v, c
+  const len = arr.length
+  for (i = 0; i < len; i++) {
+    const arrI = arr[i]
+    if (arrI !== 0) {
+      j = result[result.length - 1] //  j是子序列索引最后一项
+      if (arr[j] < arrI) { //  如果arr[i] > arr[j], 当前值比最后一项还大，可以直接push到索引数组(result)中去
+        p[i] = j //  p记录第i个位置的索引变为j
+        result.push(i)
+        continue
+      }
+      u = 0 //  数组的第一项
+      v = result.length - 1 //  数组的最后一项
+      while (u < v) { //  如果arrI <= arr[j] 通过二分查找，将i插入到result对应位置；u和v相等时循环停止
+        c = ((u + v) / 2) | 0 //  二分查找 
+        if (arr[result[c]] < arrI) {
+          u = c + 1 //  移动u
+        } else {
+          v = c //  中间的位置大于等于i,v=c
+        }
+      }
+      if (arrI < arr[result[u]]) {
+        if (u > 0) {
+          p[i] = result[u - 1] //  记录修改的索引
+        }
+        result[u] = i //  更新索引数组(result)
+      }
+    }
+  }
+  u = result.length
+  v = result[u - 1]
+  //把u值赋给result  
+  while (u-- > 0) { //  最后通过p数组对result数组进行进行修订，取得正确的索引
+    result[u] = v
+    v = p[v];
+  }
+  return result
 }

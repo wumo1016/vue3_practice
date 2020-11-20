@@ -31,8 +31,7 @@
           color: 'blue'
         }
       },
-      children: [
-        {
+      children: [{
           tag: 'li',
           props: {
             style: {
@@ -80,6 +79,7 @@
         tag: 'ul',
         props: {},
         children: [
+          
           {
             tag: 'li',
             props: {
@@ -89,6 +89,16 @@
               key: 4
             },
             children: 'D'
+          },
+          {
+            tag: 'li',
+            props: {
+              style: {
+                background: 'red'
+              },
+              key: 1
+            },
+            children: 'A'
           },
           {
             tag: 'li',
@@ -106,9 +116,9 @@
               style: {
                 background: 'blue'
               },
-              key: 1
+              key: 5
             },
-            children: 'A'
+            children: 'E'
           },
           {
             tag: 'li',
