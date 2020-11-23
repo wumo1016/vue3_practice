@@ -6,7 +6,7 @@ export interface LessonList {
   title: string
   video: string
   poster: string
-  orice: number
+  price: number
   category?: string
 }
 

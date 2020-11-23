@@ -14,10 +14,10 @@ const routes: Array<RouteRecordRaw> = [
       import(/*  webpackChunkName: "mine" */ '@/views/mine/index.vue')
   },
   {
-    path: '/prifile',
-    name: 'Prifile',
+    path: '/profile',
+    name: 'profile',
     component: () =>
-      import(/*  webpackChunkName: "prifile" */ '@/views/prifile/index.vue')
+      import(/*  webpackChunkName: "profile" */ '@/views/profile/index.vue')
   }
 ]
 
