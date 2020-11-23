@@ -18,7 +18,7 @@ export interface Lessons {
   list: LessonList[]
 }
 
-export enum CATOGORY_TYPES {
+export enum CATEGORY_TYPES {
   ALL,
   REACT,
   VUE,
@@ -26,7 +26,7 @@ export enum CATOGORY_TYPES {
 }
 
 export interface HomeState {
-  currentCategory: CATOGORY_TYPES
+  currentCategory: CATEGORY_TYPES
   sliders: Slider[]
   lessons: Lessons
 }
