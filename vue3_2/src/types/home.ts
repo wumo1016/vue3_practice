@@ -6,7 +6,7 @@ export interface Lesson {
   title: string
   img: string
   price: number
-  category?: string
+  category?: number
 }
 
 export interface Lessons {
