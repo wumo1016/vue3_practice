@@ -51,8 +51,9 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+  z-index: 1;
   img {
-    height: 90%;
+    height: 60%;
     width: auto;
   }
   .van-dropdown-menu__title {

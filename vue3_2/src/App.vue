@@ -1,4 +1,10 @@
 <template>
+  <!-- keep-alive 用法 Component是当前要渲染的组件 -->
+  <!-- <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view> -->
   <router-view />
   <van-tabbar route>
     <van-tabbar-item to="/" icon="home-o">首页</van-tabbar-item>

@@ -2,10 +2,9 @@ export interface Slider {
   url: string
 }
 
-export interface LessonList {
+export interface Lesson {
   title: string
-  video: string
-  poster: string
+  img: string
   price: number
   category?: string
 }
@@ -15,7 +14,7 @@ export interface Lessons {
   loading: boolean
   offset: number
   limit: number
-  list: LessonList[]
+  list: Lesson[]
 }
 
 export enum CATEGORY_TYPES {
