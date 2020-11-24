@@ -53,10 +53,10 @@ const home: Module<HomeState, GlobalState> = {
         state.lessons.offset,
         state.lessons.limit
       )
+      await new Promise(r => {
+        setTimeout(() => r(), 200)
+      })
       commit(types.SET_LESSON_LIST, lessons)
-      // await new Promise(r => {
-      //   setTimeout(() => r(), 1000)
-      // })
       commit(types.SET_LOADING, false)
     }
   }
