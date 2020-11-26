@@ -1,0 +1,1 @@
+{"version":3,"file":"vue.js","sources":["../src/index.ts"],"sourcesContent":["const str:string = 'hollo'\r\ndebugger\r\nconsole.log(str)\r\n"],"names":[],"mappings":";;;;;CAAA,IAAM,GAAG,GAAU,OAAO,CAAA;CAC1B,SAAQ;CACR,OAAO,CAAC,GAAG,CAAC,GAAG,CAAC;;;;;;"}
