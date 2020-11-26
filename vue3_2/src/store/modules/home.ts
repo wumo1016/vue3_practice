@@ -23,6 +23,10 @@ const home: Module<HomeState, GlobalState> = {
   mutations: {
     [types.SET_CATEGORY](state, payload: CATEGORY_TYPES) {
       state.currentCategory = payload
+      // 初始化
+      state.lessons.list = []
+      state.lessons.offset = 0
+      state.lessons.hasMore = true
     },
     [types.SET_SLIDER_LIST](state, payload: Slider[]) {
       state.sliders = payload
@@ -33,7 +37,7 @@ const home: Module<HomeState, GlobalState> = {
     [types.SET_LESSON_LIST](state, payload: Lessons) {
       state.lessons.list = [...state.lessons.list, ...payload.list]
       state.lessons.hasMore = payload.hasMore
-      state.lessons.offset = payload.list.length + payload.list.length
+      state.lessons.offset = state.lessons.list.length
     }
   },
   actions: {
@@ -54,7 +58,7 @@ const home: Module<HomeState, GlobalState> = {
         state.lessons.limit
       )
       await new Promise(r => {
-        setTimeout(() => r(), 200)
+        setTimeout(() => r(), 500)
       })
       commit(types.SET_LESSON_LIST, lessons)
       commit(types.SET_LOADING, false)

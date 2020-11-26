@@ -14,7 +14,7 @@ const lessons = {
     .map((v, index) => {
       return {
         title: `react课程${index + 1}`,
-        img: 'http://img.zhufengpeixun.cn/6.vue.png',
+        img: 'http://img.zhufengpeixun.cn/7.react.png',
         price: 123,
         category: 1
       }
@@ -24,7 +24,7 @@ const lessons = {
     .map((v, index) => {
       return {
         title: `vue课程${index + 1}`,
-        img: 'http://img.zhufengpeixun.cn/7.react.png',
+        img: 'http://img.zhufengpeixun.cn/6.vue.png',
         price: 123,
         category: 2
       }
@@ -55,12 +55,11 @@ export const getLessons = (type: CATEGORY_TYPES, offset = 0, limit = 5) => {
   } else {
     lessonList = lessons[type]
   }
-
   const length = lessonList.length
 
   if (length <= offset + limit) {
     hasMore = false
-    currentLessonList = lessonList.slice(offset, length - 1)
+    currentLessonList = lessonList.slice(offset, length)
   } else {
     currentLessonList = lessonList.slice(offset, offset + limit)
   }
