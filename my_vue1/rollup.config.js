@@ -1,32 +1,21 @@
-import ts from 'rollup-plugin-typescript2'
-import { nodeResolve }  from '@rollup/plugin-node-resolve'
-import replace  from '@rollup/plugin-replace'
-import serve from 'rollup-plugin-serve'
-import path from 'path'
+import server from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 
 export default {
-  input: 'src/index.ts',
+  input: './src/index.js',
   output: {
-    name: 'VueReactivity',
+    file: './public/index.js',
     format: 'umd',
-    file: path.resolve('dist/vue.js'),
-    sourcemap: true, // 生成引射文件
+    name: 'Vue'
+  },
+  watch: {
+    include: ['src/**'],
   },
   plugins: [
-    nodeResolve({
-      extensions: ['.js','.ts']
+    server({
+      port: '1016',
+      contentBase: './public/', // 文件入口位置
     }),
-    ts({
-      tsconfig: path.resolve(__dirname, 'tsconfig.json')
-    }),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    }),
-    serve({
-      open: true,
-      openPage: '/public/index.html',
-      port: 8003,
-      contentBase: ''
-    })
+    livereload(),
   ]
 }

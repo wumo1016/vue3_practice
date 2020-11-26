@@ -1,11 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
-  <script src="../dist/vue.js"></script>
+  <div id="app"></div>
+  <script src="./index.js"></script>
+  <script>
+    const app = document.querySelector('#app')
+    const {
+      render,
+      effect,
+      reactive
+    } = Vue
+
+    const state = reactive({
+      count: 0,
+      name: ''
+    })
+    // diff思想
+    // 1.先对比属性
+    const oldVnode = {
+      tag: 'ul',
+      props: {
+        style: {
+          color: 'blue'
+        }
+      },
+      children: [{
+          tag: 'li',
+          props: {
+            style: {
+              background: 'red'
+            },
+            key: 1
+          },
+          children: 'A'
+        },
+        {
+          tag: 'li',
+          props: {
+            style: {
+              background: 'yellow'
+            },
+            key: 2
+          },
+          children: 'B'
+        },
+        {
+          tag: 'li',
+          props: {
+            style: {
+              background: 'blue'
+            },
+            key: 3
+          },
+          children: 'C'
+        },
+        {
+          tag: 'li',
+          props: {
+            style: {
+              background: 'green'
+            },
+            key: 4
+          },
+          children: 'D'
+        },
+      ]
+    }
+    render(oldVnode, app)
+    setTimeout(() => {
+      const newVnode = {
+        tag: 'ul',
+        props: {},
+        children: [
+          
+          {
+            tag: 'li',
+            props: {
+              style: {
+                background: 'green'
+              },
+              key: 4
+            },
+            children: 'D'
+          },
+          {
+            tag: 'li',
+            props: {
+              style: {
+                background: 'red'
+              },
+              key: 1
+            },
+            children: 'A'
+          },
+          {
+            tag: 'li',
+            props: {
+              style: {
+                background: 'yellow'
+              },
+              key: 2
+            },
+            children: 'B'
+          },
+          {
+            tag: 'li',
+            props: {
+              style: {
+                background: 'blue'
+              },
+              key: 5
+            },
+            children: 'E'
+          },
+          {
+            tag: 'li',
+            props: {
+              style: {
+                background: 'blue'
+              },
+              key: 3
+            },
+            children: 'C'
+          },
+        ]
+      }
+      render(newVnode, app)
+    }, 2000)
+
+    // --------------- Round2 ------------------
+    // const oldVnode = {
+    //   tag: 'div',
+    //   props: { style: { color: 'red' } },
+    //   children: '测试1'
+    // }
+    // render(oldVnode, app)
+    // setTimeout(() => {
+    //   const newVnode = {
+    //     tag: 'div',
+    //     props: { style: { color: 'blue' } },
+    //     children: '测试1'
+    //   }
+    //   render(newVnode, app)
+    // }, 2000)
+
+    // -------------- Round1  ------------------
+    // const state = reactive({
+    //   count: 0,
+    //   name: '测试'
+    // })
+    // const myComp = {
+    //   setup() {
+    //     // 如果没有返回函数，会将template编译成render函数
+    //     return () => { // render函数
+    //       return {
+    //         tag: 'div',
+    //         props: {
+    //           style: {
+    //             color: 'pink'
+    //           }
+    //         },
+    //         children: [
+    //           {
+    //             tag: 'p',
+    //             children: '我是一个自定义组件' + state.name
+    //           },
+    //           {
+    //             tag: 'button',
+    //             props: {
+    //               onClick: () => state.name = '测试2'
+    //             },
+    //             children: '组件点我啊'
+    //           }
+    //         ]
+    //       }
+    //     }
+    //   }
+    // }
+
+    // effect(() => {
+    //   const vnode = {
+    //     tag: 'div',
+    //     props: {
+    //       style: {
+    //         border: '1px solid yellow'
+    //       }
+    //     },
+    //     children: [{
+    //         tag: 'p',
+    //         props: {
+    //           style: {
+    //             color: 'blue'
+    //           }
+    //         },
+    //         children: 'vue@3 - 计数器' + state.name
+    //       },
+    //       {
+    //         tag: 'button',
+    //         props: {
+    //           onClick: () => {
+    //             // state.count++
+    //             state.name = '测试1'
+    //           }
+    //         },
+    //         children: '点我啊'
+    //       },
+    //       {
+    //         tag: myComp,
+    //         props: null,
+    //         children: '' // 组件的插槽
+    //       }
+    //     ],
+    //   }
+    //   render(vnode, app)
+    // })
+  </script>
 </body>
+
 </html>
