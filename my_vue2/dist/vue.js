@@ -4,7 +4,6 @@
 }((function () { 'use strict';
 
 	var str = 'hollo';
-	debugger;
 	console.log(str);
 
 })));
