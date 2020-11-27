@@ -1,2 +1,1 @@
-const str:string = 'hollo'
-console.log(str)
+export * from './reactivity/index'
