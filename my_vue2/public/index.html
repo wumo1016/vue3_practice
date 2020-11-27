@@ -19,18 +19,24 @@
       computed,
     } = VueReactivity
 
-    const state = reactive({
-      name: 'wyb',
-      age: 11,
-      address: '测试'
-    })
-    console.log(state)
-    // effect函数中依赖的数据发生变化时，effect会重新执行
-    // effect(() => {
-    //   app.innerHTML = `${state.name}今年${state.age}岁了`
+    // const state = reactive({
+    //   name: 'wyb',
+    //   age: 18,
+    //   address: '苏州'
     // })
 
+    const state = reactive([1, 2, 3])
+    // effect函数中依赖的数据发生变化时，effect会重新执行
+    effect(() => {
+      console.log('effect执行啦')
+      // app.innerHTML = `${state.name}今年${state.age}岁了`
+      app.innerHTML = state
+    })
 
+    setTimeout(() => {
+      // state.address = 'wumo'
+      state[5] = 10
+    }, 1000)
   </script>
 </body>
 

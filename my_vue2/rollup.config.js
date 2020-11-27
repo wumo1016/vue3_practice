@@ -3,6 +3,7 @@ import { nodeResolve }  from '@rollup/plugin-node-resolve'
 import replace  from '@rollup/plugin-replace'
 import serve from 'rollup-plugin-serve'
 import path from 'path'
+import livereload from 'rollup-plugin-livereload'
 
 export default {
   input: 'src/index.ts',
@@ -27,6 +28,7 @@ export default {
       openPage: '/public/index.html',
       port: 8003,
       contentBase: ''
-    })
+    }),
+    livereload()
   ]
 }
