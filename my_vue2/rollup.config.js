@@ -5,12 +5,14 @@ import serve from 'rollup-plugin-serve'
 import path from 'path'
 import livereload from 'rollup-plugin-livereload'
 
+const resolveFile = filePath => path.join(__dirname, filePath)
+
 export default {
   input: 'src/index.ts',
   output: {
-    name: 'VueReactivity',
+    name: 'Vue',
     format: 'umd',
-    file: path.resolve('dist/vue.js'),
+    file: './dist/vue.js',
     sourcemap: true, // 生成引射文件
   },
   plugins: [
@@ -18,14 +20,13 @@ export default {
       extensions: ['.js','.ts']
     }),
     ts({
-      tsconfig: path.resolve(__dirname, 'tsconfig.json')
+      tsconfig: './tsconfig.json'
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
     serve({
       open: true,
-      openPage: '/public/index.html',
       port: 8003,
       contentBase: ''
     }),

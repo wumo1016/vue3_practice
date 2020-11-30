@@ -10,7 +10,8 @@
   "author": "wuyibo <760478279wyb@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@vue/reactivity": "^3.0.2"
+    "@vue/reactivity": "^3.0.2",
+    "vue": "^3.0.3"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^10.0.0",
