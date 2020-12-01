@@ -1,5 +1,5 @@
 import { effect } from "../reactivity/index"
-import { shapeFlags } from "../shared/index"
+import { hasOwn, shapeFlags } from "../shared/index"
 import { createAppApi } from "./apiCreateApp"
 import { createComponentInstance, setupComponent } from "./component"
 
@@ -14,19 +14,19 @@ function baseCreateRenderer(options) {
     patchProp: hostPatchProp,
     setElementText: hostSetElementText,
     insert: hostInsert,
-    renove: hostRemove
+    remove: hostRemove
   } = options
 
   function mountElement(vnode, container) {
     const { type, shapeFlag, children, props } = vnode
     const el = vnode.el = hostCreatElement(type)
     // 创建儿子
-    if(shapeFlag & shapeFlags.TEXT_CHILDREN){
+    if (shapeFlag & shapeFlags.TEXT_CHILDREN) {
       hostSetElementText(el, children)
-    } else if(shapeFlag & shapeFlags.ARRAY_CHILDREN){
+    } else if (shapeFlag & shapeFlags.ARRAY_CHILDREN) {
       mountChildren(children, el)
     }
-    if(props){
+    if (props) {
       for (const key in props) {
         hostPatchProp(el, key, null, props[key])
       }
@@ -34,13 +34,64 @@ function baseCreateRenderer(options) {
     hostInsert(el, container)
   }
 
-  function mountChildren(children, container){
+  function mountChildren(children, container) {
     for (let i = 0; i < children.length; i++) {
       patch(null, children[i], container)
     }
   }
- 
-  function patchElement(n1, n2, container) {
+
+  function patchElement(n1, n2) {
+    const el = n2.el = n1.el
+    const oldProps = n1.props
+    const newProps = n2.props
+    // 比较前后的属性差异
+    patchProps(oldProps, newProps, el)
+    // 比较孩子
+    patchChildren(n1, n2, el)
+  }
+
+  function patchProps(oldProps, newProps, el) {
+    if (oldProps !== newProps) {
+      // 新的需要覆盖旧的
+      for (const key in newProps) {
+        const prev = oldProps[key]
+        const next = newProps[key]
+        if (prev !== next) {
+          hostPatchProp(el, key, prev, next)
+        }
+      }
+      // 旧有新没有
+      for (const key in oldProps) {
+        if (!hasOwn(newProps, key)) {
+          hostPatchProp(el, key, oldProps[key], null)
+        }
+      }
+    }
+  }
+
+  function patchChildren(n1, n2, el) {
+    const c1 = n1.children
+    const c2 = n2.children
+    // 元素类型
+    const prevShapeFlag = n1.shapeFlag
+    const nextShapeFlag = n2.shapeFlag
+    // 新的是文本 => 覆盖掉旧的即可
+    if (nextShapeFlag & shapeFlags.TEXT_CHILDREN) {
+      if (c1 !== c2) {
+        hostSetElementText(el, c2)
+      }
+    } else {
+      // 旧的是文本 => 移除旧的
+      if (prevShapeFlag & shapeFlags.TEXT_CHILDREN) {
+        hostSetElementText(el, '')
+        if(nextShapeFlag & shapeFlags.ARRAY_CHILDREN){  // 新的是数组 => 挂载新的
+          mountChildren(c2, el)
+        }
+      } else if(prevShapeFlag & shapeFlags.ARRAY_CHILDREN){ // 旧的是数组 => diff算法
+          
+      }
+    }
+
   }
 
   function mountComponent(vnode, container) {
@@ -62,10 +113,9 @@ function baseCreateRenderer(options) {
         instance.isMounted = true
       } else {
         // 更新逻辑
-        const perv = instance.subTree
+        const prev = instance.subTree
         const next = instance.render()
-        console.log(perv)
-        console.log(next)
+        patch(prev, next, container)
       }
     })
   }
@@ -78,7 +128,7 @@ function baseCreateRenderer(options) {
     if (n1 == null) {
       mountElement(n2, container)
     } else {
-      patchElement(n1, n2, container)
+      patchElement(n1, n2)
     }
   }
 
@@ -90,12 +140,24 @@ function baseCreateRenderer(options) {
     }
   }
 
+  function isSameVnodeType(n1, n2) {
+    return n1.type === n2.type && n1.key === n2.key
+  }
+
   const patch = (n1, n2, container) => {
     const { shapeFlag } = n2
     // 按位与 同一位置上都是1，才是1
     // 10100 10100
     // 00100 00001
     // 00100 00000
+
+    // 如果同一个节点的前后的标签不一样
+    if (n1 && !isSameVnodeType(n1, n2)) {
+      // 删除老节点
+      hostRemove(n1.el)
+      n1 = null
+    }
+
     if (shapeFlag & shapeFlags.ELEMENT) { // 如果是元素
       processElement(n1, n2, container)
     } else if (shapeFlag & shapeFlags.STATEFUL_COMPONENT) { // 如果是组件

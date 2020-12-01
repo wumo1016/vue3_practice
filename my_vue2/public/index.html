@@ -21,20 +21,26 @@
     const App = {
       setup() {
         const state = reactive({
-          name: 'wyb',
-          age: 18
+          flag: true
         })
 
         setTimeout(() => {
-          state.name = 'wumo'
+          state.flag = !state.flag
         }, 1000)
 
         return () => {
-          return h('div', {
+          return state.flag ? h('div', {
             style: {
               color: 'red'
-            }
-          }, state.name + state.age)
+            },
+          }, 'hello') : h('div', {
+            style: {
+              color: 'blue'
+            },
+          }, [
+            h('span', {}, '1'),
+            h('span', {}, '2'),
+          ])
         }
       }
     }
