@@ -1,10 +1,11 @@
+import { createVNode } from "./vnode"
 
 export function createAppApi(render) {
   return (rootCompoment) => {
     const app = {
       mount(container) {
-
-        // render(vnode, container)
+        const vnode = createVNode(rootCompoment)
+        render(vnode, container)
       }
     }
     return app

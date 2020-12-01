@@ -24,6 +24,11 @@
           name: 'wyb',
           age: 18
         })
+
+        setTimeout(() => {
+          state.name = 'wumo'
+        }, 1000)
+
         return () => {
           return h('div', {
             style: {
