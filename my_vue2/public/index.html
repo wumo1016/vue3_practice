@@ -33,13 +33,42 @@
             style: {
               color: 'red'
             },
-          }, 'hello') : h('div', {
+          }, [
+            h('span', {
+              key: 'a'
+            }, 'a'),
+            h('span', {
+              key: 'b'
+            }, 'b'),
+            h('span', {
+              key: 'c'
+            }, 'c'),
+            h('span', {
+              key: 'd'
+            }, 'd'),
+            h('span', {
+              key: 'e'
+            }, 'e'),
+          ]) : h('div', {
             style: {
               color: 'blue'
             },
           }, [
-            h('span', {}, '1'),
-            h('span', {}, '2'),
+            h('span', {
+              key: 'a'
+            }, 'a'),
+            h('span', {
+              key: 'd'
+            }, 'd'),
+            h('span', {
+              key: 'b'
+            }, 'b'),
+            h('span', {
+              key: 'e'
+            }, 'e'),
+            h('span', {
+              key: 'c'
+            }, 'c'),
           ])
         }
       }
