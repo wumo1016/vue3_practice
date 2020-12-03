@@ -115,7 +115,7 @@ function patchChildren(n1, n2, container) {
 }
 
 // diff 对比两个孩子
-function patchKeyedChildren(c1, c2, container) {
+function patchKeyedChildren(c1, c2, el) {
   const e1 = c1.length - 1 // 老的最后一项的索引
   const e2 = c2.length - 1 // 新的最后一项的索引
 
@@ -136,7 +136,7 @@ function patchKeyedChildren(c1, c2, container) {
     } else {
       // 复用(将新 newVnode.el = oldVnode.el )以便将来移动，更新属性
       newIndexToOldIndexMap[newIndex] = i + 1
-      patch(oldVnode, c2[newIndex], container)
+      patch(oldVnode, c2[newIndex], el)
     }
   }
   // 根据最长递增子序列 来确定不需要移动的索引
@@ -147,12 +147,12 @@ function patchKeyedChildren(c1, c2, container) {
     let currentEle = c2[i].el
     const anchor = i + 1 <= e2 ? c2[i + 1].el : null
     if (newIndexToOldIndexMap[i] === -1) { // 这是一个新元素
-      patch(null, c2[i], container, anchor)
+      patch(null, c2[i], el, anchor)
     } else {
       if (i === sequence[j]) { // 过滤掉不需要移动的索引
         j--
       } else { // 移动/插入
-        nodeOps.insert(currentEle, container, anchor)
+        nodeOps.insert(currentEle, el, anchor)
       }
     }
   }

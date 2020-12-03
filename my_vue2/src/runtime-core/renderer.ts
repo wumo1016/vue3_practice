@@ -88,12 +88,12 @@ function baseCreateRenderer(options) {
           mountChildren(c2, el)
         }
       } else if (prevShapeFlag & shapeFlags.ARRAY_CHILDREN) { // 旧的是数组 => diff算法
-        patchKeydChildren(c1, c2, el)
+        patchKeyedChildren(c1, c2, el)
       }
     }
   }
 
-  function patchKeydChildren(c1, c2, el) {
+  function patchKeyedChildren(c1, c2, el) {
     // 最后一项的索引
     let e1 = c1.length - 1
     let e2 = c2.length - 1
@@ -148,7 +148,7 @@ function baseCreateRenderer(options) {
         keyToIndex.set(newChild.key, index)
       }
       const toBePatched = e2-i+1
-      const newIndexToOldmapIndex = Array(e2-i+1).fill(-1)
+      const newIndexToOldmapIndex = Array(e2-i+1).fill(0)
       for (let index = i; index <= e1; index++) {
         const prevChild = c1[index]
         const newIndex = keyToIndex.get(prevChild.key)
@@ -165,13 +165,13 @@ function baseCreateRenderer(options) {
 
       for (let index = toBePatched - 1; index >= 0; index--) {
         const nextIndex = i + index
-        const nextChild = c2[nextIndex].el
+        const nextChild = c2[nextIndex]
         const anchor = nextIndex + 1 < c2.length ? c2[nextIndex + 1].el : null // 当前索引的前一项
-        if(newIndexToOldmapIndex[index] == -1){
-          patch(null, nextChild, el)
+        if(newIndexToOldmapIndex[index] == 0){
+          patch(null, nextChild, el, anchor)
         } else {
           if(j < 0 || index != increasingIndexSequence[j]){
-            hostInsert(nextChild, el, anchor)
+            hostInsert(nextChild.el, el, anchor)
           } else {
             j--
           }
@@ -179,6 +179,49 @@ function baseCreateRenderer(options) {
       }
     }
   }
+
+  // function patchKeyedChildren(c1, c2, el) {
+  //   const e1 = c1.length - 1 // 老的最后一项的索引
+  //   const e2 = c2.length - 1 // 新的最后一项的索引
+  
+  //   // 1.根据新节点 生成一个key => index 的映射表
+  //   const keyedToNewIndexMap = new Map()
+  //   for (let i = 0; i <= e2; i++) {
+  //     const currentEle = c2[i];
+  //     keyedToNewIndexMap.set(currentEle.props.key, i)
+  //   }
+  //   // 2.更新已有元素的属性，并将新的没有的老元素删除
+  //   const newIndexToOldIndexMap = new Array(e2 + 1).fill(-1)
+  //   for (let i = 0; i <= e1; i++) {
+  //     const oldVnode = c1[i];
+  //     const newIndex = keyedToNewIndexMap.get(oldVnode.props.key)
+  //     if (newIndex == undefined) {
+  //       // 老的有 新的没有，就移除
+  //       hostRemove(oldVnode.el)
+  //     } else {
+  //       // 复用(将新 newVnode.el = oldVnode.el )以便将来移动，更新属性
+  //       newIndexToOldIndexMap[newIndex] = i + 1
+  //       patch(oldVnode, c2[newIndex], el)
+  //     }
+  //   }
+  //   // 根据最长递增子序列 来确定不需要移动的索引
+  //   const sequence = getSequence(newIndexToOldIndexMap)
+  //   let j = sequence.length - 1 // 获取末尾索引
+  //   // 3.key一样 移动操作 从后往前插入
+  //   for (let i = e2; i >= 0; i--) {
+  //     let currentEle = c2[i].el
+  //     const anchor = i + 1 <= e2 ? c2[i + 1].el : null
+  //     if (newIndexToOldIndexMap[i] === -1) { // 这是一个新元素
+  //       patch(null, c2[i], el, anchor)
+  //     } else {
+  //       if (i === sequence[j]) { // 过滤掉不需要移动的索引
+  //         j--
+  //       } else { // 移动/插入
+  //         hostInsert(currentEle, el, anchor)
+  //       }
+  //     }
+  //   }
+  // }
 
   function mountComponent(vnode, container) {
     // 组件挂载逻辑
