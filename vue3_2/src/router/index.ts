@@ -4,6 +4,7 @@ import Home from '@/views/home/index.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    redirect: '/test',
     name: 'Home',
     component: Home
   },
@@ -18,6 +19,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'profile',
     component: () =>
       import(/*  webpackChunkName: "profile" */ '@/views/profile/index.vue')
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () =>
+      import(/*  webpackChunkName: "profile" */ '@/views/practice/reactive.vue')
   }
 ]
 
