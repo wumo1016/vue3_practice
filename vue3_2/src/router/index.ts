@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/test',
     name: 'Test',
     component: () =>
-      import(/*  webpackChunkName: "profile" */ '@/views/practice/reactive.vue')
+      import(/*  webpackChunkName: "profile" */ '@/views/practice/test.vue')
   }
 ]
 
