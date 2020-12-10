@@ -1,28 +1,13 @@
 <template>
-  <div>
-    <Modal :isOpen="modalIsOpen" @closeModel="closeModal" />
-    <button @click="openModal">打开</button>
-  </div>
+  <div></div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import Modal from './modal.vue'
+import { defineComponent } from 'vue'
+
 export default defineComponent({
-  components: { Modal },
   setup() {
-    const modalIsOpen = ref(false)
-    const openModal = () => {
-      modalIsOpen.value = true
-    }
-    const closeModal = () => {
-      modalIsOpen.value = false
-    }
-    return {
-      modalIsOpen,
-      openModal,
-      closeModal
-    }
+    return {}
   }
 })
 </script>
