@@ -2,10 +2,15 @@
 import { createApp } from 'vue'
 import App from './app.vue'
 
+// import WmUi from '../lib'
+// import WmUi from '../lib/index.esm.js'
 import WmUi from 'wm-ui'
-import 'theme-chalk/index.scss';
-
+import 'theme-chalk/lib/index.css';
 createApp(App).use(WmUi).mount('#app')
+
+// 按需加载
+// import Button from '../lib/button'
+// createApp(App).use(Button).mount('#app')
 
 // 安装依赖
 // yarn add webpack webpack-cli webpack-dev-server vue-loader@next @vue/compiler-sfc -D
