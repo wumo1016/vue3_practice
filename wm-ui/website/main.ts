@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 import App from './app.vue'
 
 import WmUi from 'wm-ui'
+import 'theme-chalk/index.scss';
 
 createApp(App).use(WmUi).mount('#app')
 

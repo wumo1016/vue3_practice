@@ -1,7 +1,7 @@
 <template>
   <div>
     <wm-button></wm-button>
-    <wm-icon></wm-icon>
+    <wm-icon name="loading"></wm-icon>
   </div>
 </template>
 

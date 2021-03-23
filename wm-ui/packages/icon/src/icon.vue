@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <span>icon</span>
-  </div>
+  <i :class="`wm-icon-${name}`"></i>
 </template>
 
 <script>
   export default {
-    name: 'WmIcon'
+    name: 'WmIcon',
+    props: {
+      name: {
+        type: String,
+        default: ''
+      }
+    }
   }
 </script>

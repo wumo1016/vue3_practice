@@ -33,7 +33,7 @@ module.exports = {
         loader: 'vue-loader'
       },
       {
-        test: /\.(svg|png|jpg|jpeg)$/, 
+        test: /\.(woff|eot|ttf|svg|png|jpg|jpeg)$/, 
         loader: 'url-loader'
       },
       {
@@ -41,7 +41,7 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
-          'scss-loader'
+          'sass-loader'
         ]
       },
     ]
