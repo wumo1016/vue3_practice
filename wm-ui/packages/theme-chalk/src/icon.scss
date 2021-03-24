@@ -714,29 +714,42 @@
 .wm-icon-fullscreen-expand:before {
     content: "\e6af";
 }
+
 .wm-icon-map:before {
     content: "\e6b0";
 }
+
 .wm-icon-meh:before {
     content: "\e6b1";
 }
+
 .wm-icon-menu:before {
     content: "\e6b2";
 }
+
 .wm-icon-loading:before {
     content: "\e6b3";
 }
+
 .wm-icon-help:before {
     content: "\e6b4";
 }
-@keyframes rotate {
-    from {
-        opacity:0
+
+@keyframes rotating {
+    0% {
+        // transform: rotate(0);
+        opacity: 1;
     }
-    to {
-        opacity:1;
+    50% {
+        // transform: rotate(1turn);
+        opacity: 0;
+    }
+    100% {
+        // transform: rotate(1turn);
+        opacity: 1;
     }
 }
+
 .#{$namespace}-icon-loading {
-    animation: rotate 1.5s linear infinite;
+    animation: rotating 2s linear infinite;
 }
