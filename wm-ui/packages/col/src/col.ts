@@ -1,4 +1,4 @@
-import { computed, defineComponent, h } from "vue";
+import { computed, defineComponent, h, inject } from "vue";
 
 export default defineComponent({
     name: 'WmCol',
@@ -8,15 +8,29 @@ export default defineComponent({
             default: 'div'
         },
         span: {
-            type: Number || String,
+            type: [Number, String],
             default: 24
         },
         offset: {
-            type: Number || String,
+            type: [Number, String],
             default: 0
         }
     },
     setup(props, { slots }) {
+
+        const gutter = inject('RowGetter', 0)
+
+        const style = computed(() =>{
+            if(gutter != 0){
+                const value = gutter/2 + 'px'
+                return {
+                    paddingLeft: value,
+                    paddingRight: value,
+                }
+            }
+        })
+        
+
         const classs = computed(() => {
             const pos = ['span', 'offset'] as const;
             const ret = ['wm-col']
@@ -30,7 +44,8 @@ export default defineComponent({
         })
         return () => {
             return h(props.tag, {
-                class: classs.value
+                class: classs.value,
+                style: style.value,
             }, slots.default?.())
         }
     }

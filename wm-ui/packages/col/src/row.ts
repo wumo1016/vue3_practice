@@ -1,4 +1,4 @@
-import { computed, defineComponent, h } from "vue";
+import { computed, defineComponent, h, provide } from "vue";
 
 export default defineComponent({
     name: 'WmRow',
@@ -8,7 +8,7 @@ export default defineComponent({
             default: 'div'
         },
         gutter: {
-            type: Number,
+            type: [Number, String],
             default: 0
         },
         justify: {
@@ -17,13 +17,31 @@ export default defineComponent({
         }
     },
     setup(props, { slots }) {
+
+        provide('RowGetter', props.gutter) // 提供给所有子组件
+
         const classs = computed(() => {
-            const ret = ['wm-row']
+            const ret = [
+                'wm-row',
+                props.justify != 'start' ? `is-justify-${props.justify}` : ''
+            ]
             return ret
         })
+
+        const style = computed(() =>{
+            if(props.gutter != 0){
+                const value = -(Number(props.gutter) / 2) + 'px'
+                return {
+                    marginLeft: value,
+                    marginRight: value,
+                }
+            }
+        })
+
         return () => {
             return h(props.tag, {
-                class: classs.value
+                class: classs.value,
+                style: style.value,
             }, slots.default?.())
         }
     }

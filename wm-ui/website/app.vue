@@ -4,23 +4,15 @@
     <h3>Button按钮</h3>
     <div class="module_wrapper button_wrapper">
       <wm-button>默认按钮</wm-button>
-      <wm-button
-        type="primary"
-        disabled
-      >禁用按钮</wm-button>
+      <wm-button type="primary" disabled>禁用按钮</wm-button>
       <wm-button type="primary">主要按钮</wm-button>
       <wm-button type="success">成功按钮</wm-button>
       <wm-button type="info">信息按钮</wm-button>
       <wm-button type="warning">警告按钮</wm-button>
       <wm-button type="danger">危险按钮</wm-button>
-      <wm-button
-        icon="wm-icon-search"
-        type="primary"
-      >带图标按钮</wm-button>
-      <wm-button
-        loading
-        type="primary"
-      >loading按钮</wm-button>
+      <wm-button type="primary" round>圆角按钮</wm-button>
+      <wm-button icon="wm-icon-search" type="primary">带图标按钮</wm-button>
+      <wm-button loading type="primary">loading按钮</wm-button>
     </div>
     <h3>Button按钮组</h3>
     <div class="module_wrapper button_group_wrapper">
@@ -38,10 +30,41 @@
     <h3>Layout布局</h3>
     <div class="module_wrapper layout_wrapper">
       <wm-row>
-        <wm-col span="12" offset="2" class="bg-purple">1</wm-col>
-        <wm-col span="12" offset="2" class="bg-purple-dark">2</wm-col>
-        <wm-col span="12" offset="2">3</wm-col>
-        <wm-col span="12" offset="2">4</wm-col>
+        <wm-col span="24">
+          <div class="bg-purple-dark">1</div>
+        </wm-col>
+      </wm-row>
+      <wm-row>
+        <wm-col span="12">
+          <div class="bg-purple">1</div>
+        </wm-col>
+        <wm-col span="12">
+          <div class="bg-purple-dark">1</div>
+        </wm-col>
+      </wm-row>
+      <wm-row>
+        <wm-col span="10" offset="2">
+          <div class="bg-purple">1</div>
+        </wm-col>
+        <wm-col span="10" offset="2">
+          <div class="bg-purple-dark">1</div>
+        </wm-col>
+      </wm-row>
+      <wm-row gutter="10">
+        <wm-col span="12">
+          <div class="bg-purple">1</div>
+        </wm-col>
+        <wm-col span="12">
+          <div class="bg-purple">1</div>
+        </wm-col>
+      </wm-row>
+      <wm-row gutter="10" justify="space-between">
+        <wm-col span="4">
+          <div class="bg-purple">1</div>
+        </wm-col>
+        <wm-col span="4">
+          <div class="bg-purple">1</div>
+        </wm-col>
       </wm-row>
     </div>
   </div>
@@ -51,15 +74,15 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  setup () {
+  setup() {
     const handle = () => {
-      console.log('click');
-    }
+      console.log("click");
+    };
     return {
-      handle
-    }
-  }
-})
+      handle,
+    };
+  },
+});
 </script>
 <style lang="scss">
 * {
@@ -87,9 +110,31 @@ export default defineComponent({
     }
   }
   .button_group_wrapper {
-    .wm-button-group{
+    .wm-button-group {
       margin-right: 5px;
       margin-bottom: 5px;
+    }
+  }
+  .layout_wrapper {
+    .bg-purple {
+      background: #d3dce6;
+    }
+
+    .bg-purple-dark {
+      background: #99a9bf;
+    }
+
+    .wm-row {
+      line-height: 36px;
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+    .wm-col {
+      overflow: hidden;
+      > div {
+        border-radius: 4px;
+      }
     }
   }
 }
