@@ -13,7 +13,7 @@
       class="wm-icon-loading"
     ></i>
     <span>
-      <slot></slot>
+      <slot />
     </span>
   </button>
 </template>
@@ -32,7 +32,7 @@ export default defineComponent({
   props: {
     type: {
       type: String as PropType<ButtonType>,
-      default: 'primary',
+      default: '',
       validator: (v: string) => {
         return [
           'primary',
@@ -71,7 +71,7 @@ export default defineComponent({
     }
     return {
       classs,
-      handleClick
+      handleClick,
     }
   },
 })

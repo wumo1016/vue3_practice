@@ -23,13 +23,6 @@
   font-size: 14px;
   border-radius: 4px;
 
-  // 处理icon 和文字间距
-  & [class*="#{$namespace}-icon-"] {
-    &+span {
-      margin-left: 5px;
-    }
-  }
-
   @include when(disabled) {
 
     &,
@@ -43,6 +36,12 @@
     }
   }
 
+  & [class*="#{$namespace}-icon-"] {
+    &+span {
+      margin-left: 5px;
+    }
+  }
+
   @include when(round) {
     border-radius: 20px;
     padding: 12px 23px;
@@ -53,7 +52,18 @@
   }
 
   @include m(primary) {
-    @include button-type($--color-white, $--color-primary, $--color-primary)
+    @include button-type($--color-white, $--color-primary, $--color-primary);
+
+    @include when(disabled) {
+
+      &,
+      &:hover,
+      &:focus {
+        color: #fff;
+        background-color: #a0cfff;
+        border-color: #a0cfff;
+      }
+    }
   }
 
   @include m(success) {

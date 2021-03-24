@@ -1,10 +1,12 @@
 import { App } from 'vue'
 import Button from '@wm-ui/button'
+import ButtonGroup from '@wm-ui/button-group'
 import Icon from '@wm-ui/icon'
 
 const components = [
   Button,
-  Icon
+  ButtonGroup,
+  Icon,
 ]
 
 const install = (app: App): void => {
