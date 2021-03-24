@@ -34,7 +34,16 @@
         <wm-button type="primary">第三页</wm-button>
       </wm-button-group>
     </div>
-
+    <!-- 布局 -->
+    <h3>Layout布局</h3>
+    <div class="module_wrapper layout_wrapper">
+      <wm-row>
+        <wm-col span="12" offset="2" class="bg-purple">1</wm-col>
+        <wm-col span="12" offset="2" class="bg-purple-dark">2</wm-col>
+        <wm-col span="12" offset="2">3</wm-col>
+        <wm-col span="12" offset="2">4</wm-col>
+      </wm-row>
+    </div>
   </div>
 </template>
 

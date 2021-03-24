@@ -5,7 +5,8 @@ import App from './app.vue'
 // import WmUi from '../lib'
 // import WmUi from '../lib/index.esm.js'
 import WmUi from 'wm-ui'
-import 'theme-chalk/lib/index.css';
+// import 'theme-chalk/lib/index.css';
+import 'theme-chalk/src/index.scss';
 
 createApp(App).use(WmUi).mount('#app')
 

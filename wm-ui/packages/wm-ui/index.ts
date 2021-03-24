@@ -1,11 +1,15 @@
 import { App } from 'vue'
 import Button from '@wm-ui/button'
 import ButtonGroup from '@wm-ui/button-group'
+import Row from '@wm-ui/row'
+import Col from '@wm-ui/col'
 import Icon from '@wm-ui/icon'
 
 const components = [
   Button,
   ButtonGroup,
+  Row,
+  Col,
   Icon,
 ]
 

@@ -1,0 +1,14 @@
+@import './common/var.scss';
+@import './mixins/config.scss';
+@import './mixins/mixin.scss';
+
+@include b(col) {
+  border-radius: 4px;
+  @for $i from 1 through 24 {
+    $width: $i / 24 * 100%;
+    &.#{$namespace}-col-span-#{$i} {
+      max-width: $width;
+      flex: 0 0 $width;
+    }
+  }
+}
