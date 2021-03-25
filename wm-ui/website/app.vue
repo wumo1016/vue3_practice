@@ -1,20 +1,32 @@
 <template>
   <div class="app_container">
     <!-- 按钮 -->
-    <h3>Button按钮</h3>
+    <h3>Button 按钮</h3>
     <div class="module_wrapper button_wrapper">
       <wm-button>默认按钮</wm-button>
-      <wm-button type="primary" disabled>禁用按钮</wm-button>
+      <wm-button
+        type="primary"
+        disabled
+      >禁用按钮</wm-button>
       <wm-button type="primary">主要按钮</wm-button>
       <wm-button type="success">成功按钮</wm-button>
       <wm-button type="info">信息按钮</wm-button>
       <wm-button type="warning">警告按钮</wm-button>
       <wm-button type="danger">危险按钮</wm-button>
-      <wm-button type="primary" round>圆角按钮</wm-button>
-      <wm-button icon="wm-icon-search" type="primary">带图标按钮</wm-button>
-      <wm-button loading type="primary">loading按钮</wm-button>
+      <wm-button
+        type="primary"
+        round
+      >圆角按钮</wm-button>
+      <wm-button
+        icon="wm-icon-search"
+        type="primary"
+      >带图标按钮</wm-button>
+      <wm-button
+        loading
+        type="primary"
+      >loading按钮</wm-button>
     </div>
-    <h3>Button按钮组</h3>
+    <h3>Button 按钮组</h3>
     <div class="module_wrapper button_group_wrapper">
       <wm-button-group>
         <wm-button type="primary">前进</wm-button>
@@ -27,7 +39,7 @@
       </wm-button-group>
     </div>
     <!-- 布局 -->
-    <h3>Layout布局</h3>
+    <h3>Layout 布局</h3>
     <div class="module_wrapper layout_wrapper">
       <wm-row>
         <wm-col span="24">
@@ -43,10 +55,16 @@
         </wm-col>
       </wm-row>
       <wm-row>
-        <wm-col span="10" offset="2">
+        <wm-col
+          span="10"
+          offset="2"
+        >
           <div class="bg-purple">1</div>
         </wm-col>
-        <wm-col span="10" offset="2">
+        <wm-col
+          span="10"
+          offset="2"
+        >
           <div class="bg-purple-dark">1</div>
         </wm-col>
       </wm-row>
@@ -58,7 +76,10 @@
           <div class="bg-purple">1</div>
         </wm-col>
       </wm-row>
-      <wm-row gutter="10" justify="space-between">
+      <wm-row
+        gutter="10"
+        justify="space-between"
+      >
         <wm-col span="4">
           <div class="bg-purple">1</div>
         </wm-col>
@@ -67,19 +88,36 @@
         </wm-col>
       </wm-row>
     </div>
+    <!-- checkbox -->
+    <h3>checkbox 多选框</h3>
+    <div class="module_wrapper checkbox_wrapper">
+      <wm-checkbox v-model="checkValue" @change="handle">选项一{{checkValue}}</wm-checkbox>
+    </div>
+    <h3>checkbox 多选框组</h3>
+    <div class="module_wrapper checkbox_wrapper">
+      <wm-checkbox-group></wm-checkbox-group>
+    </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+
+function useCheckbox () {
+  const checkValue = ref(true)
+  return {
+    checkValue
+  }
+}
 
 export default defineComponent({
-  setup() {
-    const handle = () => {
-      console.log("click");
+  setup () {
+    const handle = (value) => {
+      console.log("change", value);
     };
     return {
       handle,
+      ...useCheckbox()
     };
   },
 });
@@ -88,6 +126,16 @@ export default defineComponent({
 * {
   margin: 0;
   padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .app_container {

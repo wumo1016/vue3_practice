@@ -29,7 +29,6 @@ export default defineComponent({
                 }
             }
         })
-        
 
         const classs = computed(() => {
             const pos = ['span', 'offset'] as const;
@@ -42,6 +41,7 @@ export default defineComponent({
             })
             return ret
         })
+        
         return () => {
             return h(props.tag, {
                 class: classs.value,

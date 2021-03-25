@@ -1,0 +1,14 @@
+@import './common/var.scss';
+@import './mixins/config.scss';
+@import './mixins/mixin.scss';
+
+@include b(checkbox) {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @include e(label) {
+    margin-left: 5px;
+    font-size: 14px;
+  }
+}

@@ -1,16 +1,20 @@
 import { App } from 'vue'
+import Icon from '@wm-ui/icon'
 import Button from '@wm-ui/button'
 import ButtonGroup from '@wm-ui/button-group'
 import Row from '@wm-ui/row'
 import Col from '@wm-ui/col'
-import Icon from '@wm-ui/icon'
+import Checkbox from '@wm-ui/checkbox'
+import CheckboxGroup from '@wm-ui/checkbox-group'
 
 const components = [
+  Icon,
   Button,
   ButtonGroup,
   Row,
   Col,
-  Icon,
+  Checkbox,
+  CheckboxGroup,
 ]
 
 const install = (app: App): void => {
