@@ -4,27 +4,15 @@
     <h3>Button 按钮</h3>
     <div class="module_wrapper button_wrapper">
       <wm-button>默认按钮</wm-button>
-      <wm-button
-        type="primary"
-        disabled
-      >禁用按钮</wm-button>
+      <wm-button type="primary" disabled>禁用按钮</wm-button>
       <wm-button type="primary">主要按钮</wm-button>
       <wm-button type="success">成功按钮</wm-button>
       <wm-button type="info">信息按钮</wm-button>
       <wm-button type="warning">警告按钮</wm-button>
       <wm-button type="danger">危险按钮</wm-button>
-      <wm-button
-        type="primary"
-        round
-      >圆角按钮</wm-button>
-      <wm-button
-        icon="wm-icon-search"
-        type="primary"
-      >带图标按钮</wm-button>
-      <wm-button
-        loading
-        type="primary"
-      >loading按钮</wm-button>
+      <wm-button type="primary" round>圆角按钮</wm-button>
+      <wm-button icon="wm-icon-search" type="primary">带图标按钮</wm-button>
+      <wm-button loading type="primary">loading按钮</wm-button>
     </div>
     <h3>Button 按钮组</h3>
     <div class="module_wrapper button_group_wrapper">
@@ -55,16 +43,10 @@
         </wm-col>
       </wm-row>
       <wm-row>
-        <wm-col
-          span="10"
-          offset="2"
-        >
+        <wm-col span="10" offset="2">
           <div class="bg-purple">1</div>
         </wm-col>
-        <wm-col
-          span="10"
-          offset="2"
-        >
+        <wm-col span="10" offset="2">
           <div class="bg-purple-dark">1</div>
         </wm-col>
       </wm-row>
@@ -76,10 +58,7 @@
           <div class="bg-purple">1</div>
         </wm-col>
       </wm-row>
-      <wm-row
-        gutter="10"
-        justify="space-between"
-      >
+      <wm-row gutter="10" justify="space-between">
         <wm-col span="4">
           <div class="bg-purple">1</div>
         </wm-col>
@@ -96,10 +75,7 @@
     <h3>CheckboxGroup 多选框组</h3>
     <div class="module_wrapper checkbox_group_wrapper">
       {{ checkGroupValue }}
-      <wm-checkbox-group
-        v-model="checkGroupValue"
-        @change="handle"
-      >
+      <wm-checkbox-group v-model="checkGroupValue">
         <wm-checkbox label="上海"></wm-checkbox>
         <wm-checkbox label="北京"></wm-checkbox>
         <wm-checkbox label="天津"></wm-checkbox>
@@ -107,7 +83,11 @@
     </div>
     <h3>Transfer 穿梭框</h3>
     <div class="module_wrapper transfer_wrapper">
-      <wm-transfer :data="transferData" v-model="transferValue" :props="transferProp"></wm-transfer>
+      <wm-transfer
+        :data="transferData"
+        v-model="transferValue"
+        :props="transferProp"
+      ></wm-transfer>
     </div>
   </div>
 </template>
@@ -115,27 +95,28 @@
 <script>
 import { defineComponent, ref } from "vue";
 
-function useCheckbox () {
-
-  const checkValue = ref(true)
+function useCheckbox() {
+  const checkValue = ref(true);
   const checkGroupValue = ref([
-    '上海',
-    '北京',
+    "上海",
+    "北京",
     // '天津',
-  ])
+  ]);
 
-  const transferData = _ => {
+  const transferData = (_) => {
     const data = [];
     for (let i = 1; i <= 15; i++) {
       data.push({
         key: i,
         label: `备选项 ${i}`,
-        disabled: i % 4 === 0
+        disabled: i % 4 === 0,
       });
     }
     return ref(data);
   };
-  const transferValue = ref([1, 4])
+  const transferValue = ref([1, 4]);
+
+  // 9160177243dd40dd8e7e2b63867c60d0
 
   return {
     checkValue,
@@ -143,21 +124,21 @@ function useCheckbox () {
     transferData: transferData(),
     transferValue,
     transferProp: {
-      key: 'key',
-      label: 'label',
-      disabled: 'disabled'
-    }
-  }
+      key: "key",
+      label: "label",
+      disabled: "disabled",
+    },
+  };
 }
 
 export default defineComponent({
-  setup () {
+  setup() {
     const handle = (value) => {
       console.log("change", value);
     };
     return {
       handle,
-      ...useCheckbox()
+      ...useCheckbox(),
     };
   },
 });

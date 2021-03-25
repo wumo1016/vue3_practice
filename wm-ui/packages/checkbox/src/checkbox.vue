@@ -72,8 +72,10 @@ export default defineComponent({
     }
 
     const changeStatus = () => {
+      if(props.disabled) return
       const value = !checkValue.value
       emit('update:modelValue', value)
+      emit('change', value)
       changeGroupStatus(value)
     }
 
