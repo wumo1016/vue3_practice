@@ -89,11 +89,11 @@
       </wm-row>
     </div>
     <!-- checkbox -->
-    <h3>checkbox 多选框</h3>
+    <h3>Checkbox 多选框</h3>
     <div class="module_wrapper checkbox_wrapper">
       <wm-checkbox v-model="checkValue">选项一{{ checkValue }}</wm-checkbox>
     </div>
-    <h3>checkbox 多选框组</h3>
+    <h3>CheckboxGroup 多选框组</h3>
     <div class="module_wrapper checkbox_group_wrapper">
       {{ checkGroupValue }}
       <wm-checkbox-group
@@ -105,6 +105,10 @@
         <wm-checkbox label="天津"></wm-checkbox>
       </wm-checkbox-group>
     </div>
+    <h3>Transfer 穿梭框</h3>
+    <div class="module_wrapper transfer_wrapper">
+      <wm-transfer :data="transferData" v-model="transferValue" :props="transferProp"></wm-transfer>
+    </div>
   </div>
 </template>
 
@@ -112,6 +116,7 @@
 import { defineComponent, ref } from "vue";
 
 function useCheckbox () {
+
   const checkValue = ref(true)
   const checkGroupValue = ref([
     '上海',
@@ -119,9 +124,29 @@ function useCheckbox () {
     // '天津',
   ])
 
+  const transferData = _ => {
+    const data = [];
+    for (let i = 1; i <= 15; i++) {
+      data.push({
+        key: i,
+        label: `备选项 ${i}`,
+        disabled: i % 4 === 0
+      });
+    }
+    return ref(data);
+  };
+  const transferValue = ref([1, 4])
+
   return {
     checkValue,
-    checkGroupValue
+    checkGroupValue,
+    transferData: transferData(),
+    transferValue,
+    transferProp: {
+      key: 'key',
+      label: 'label',
+      disabled: 'disabled'
+    }
   }
 }
 
@@ -141,11 +166,13 @@ export default defineComponent({
 * {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 html,
 body {
   height: 100%;
+  font-size: 14px;
 }
 
 #app {
@@ -155,6 +182,7 @@ body {
 
 .app_container {
   padding: 20px;
+  padding-bottom: 700px;
 
   h3 {
     margin: 10px 0;

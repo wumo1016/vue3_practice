@@ -34,11 +34,11 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'change'],
   setup(props, { emit, slots }) {
-
     // 多选组
     const groupOptions = inject<ICheckboxGroupProvide>('group-data', {})
     const checked = computed(() => {
-      return groupOptions.modelValue.value.includes(props.label)
+      const list = groupOptions.modelValue.value
+      return Array.isArray(list) ? list.includes(props.label) : false
     })
     const changeGroupStatus = (value) => {
       if (groupOptions.name) {
