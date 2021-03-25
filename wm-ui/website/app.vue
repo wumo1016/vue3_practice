@@ -91,11 +91,19 @@
     <!-- checkbox -->
     <h3>checkbox 多选框</h3>
     <div class="module_wrapper checkbox_wrapper">
-      <wm-checkbox v-model="checkValue" @change="handle">选项一{{checkValue}}</wm-checkbox>
+      <wm-checkbox v-model="checkValue">选项一{{ checkValue }}</wm-checkbox>
     </div>
     <h3>checkbox 多选框组</h3>
-    <div class="module_wrapper checkbox_wrapper">
-      <wm-checkbox-group></wm-checkbox-group>
+    <div class="module_wrapper checkbox_group_wrapper">
+      {{ checkGroupValue }}
+      <wm-checkbox-group
+        v-model="checkGroupValue"
+        @change="handle"
+      >
+        <wm-checkbox label="上海"></wm-checkbox>
+        <wm-checkbox label="北京"></wm-checkbox>
+        <wm-checkbox label="天津"></wm-checkbox>
+      </wm-checkbox-group>
     </div>
   </div>
 </template>
@@ -105,8 +113,15 @@ import { defineComponent, ref } from "vue";
 
 function useCheckbox () {
   const checkValue = ref(true)
+  const checkGroupValue = ref([
+    '上海',
+    '北京',
+    // '天津',
+  ])
+
   return {
-    checkValue
+    checkValue,
+    checkGroupValue
   }
 }
 
@@ -183,6 +198,11 @@ body {
       > div {
         border-radius: 4px;
       }
+    }
+  }
+  .checkbox_group_wrapper {
+    .wm-checkbox {
+      margin-right: 10px;
     }
   }
 }

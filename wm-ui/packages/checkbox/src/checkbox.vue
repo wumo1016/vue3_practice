@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="wm-checkbox"
-    @click="changeStatus"
-  >
+  <div class="wm-checkbox">
     <span class="wm-checkbox__input"><input
         type="checkbox"
         v-model="checkValue"
@@ -12,14 +9,18 @@
         :checked="checked"
         @change="change"
       ></span>
-    <span class="wm-checkbox__label">
-      <slot />
+    <span
+      class="wm-checkbox__label"
+      @click="changeStatus"
+    >
+      <slot>{{ label }}</slot>
     </span>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
+import { ICheckboxGroupProvide } from './checkbox-types'
 
 export default defineComponent({
   name: 'WmCheckbox',
@@ -32,13 +33,35 @@ export default defineComponent({
     label: [String, Boolean, Number],
   },
   emits: ['update:modelValue', 'change'],
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
+
+    // 多选组
+    const groupOptions = inject<ICheckboxGroupProvide>('group-data', {})
+    const checked = computed(() => {
+      return groupOptions.modelValue.value.includes(props.label)
+    })
+    const changeGroupStatus = (value) => {
+      if (groupOptions.name) {
+        let ret = [...groupOptions.modelValue.value]
+        if (value) {
+          ret.push(props.label)
+        } else {
+          ret.splice(
+            ret.findIndex((v) => v === props.label),
+            1
+          )
+        }
+        groupOptions?.changeEvent(ret)
+      }
+    }
+
     const checkValue = computed({
       get() {
-        return props.modelValue
+        return groupOptions.name ? checked.value : props.modelValue
       },
       set(value) {
         emit('update:modelValue', value)
+        changeGroupStatus(value)
       },
     })
 
@@ -49,7 +72,9 @@ export default defineComponent({
     }
 
     const changeStatus = () => {
-      emit('update:modelValue', !checkValue.value)
+      const value = !checkValue.value
+      emit('update:modelValue', value)
+      changeGroupStatus(value)
     }
 
     return {

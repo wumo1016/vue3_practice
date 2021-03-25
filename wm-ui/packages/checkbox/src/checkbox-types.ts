@@ -1,3 +1,4 @@
+import { ComputedRef } from "@vue/reactivity";
 
 export interface ICheckboxProps {
   indeterminate?: boolean, // 是否单选
@@ -6,4 +7,10 @@ export interface ICheckboxProps {
   disabled?: boolean, // 是否禁用
   label?: string | number | boolean, // group使用
   modelValue?: string | number | boolean // 绑定的值
+}
+
+export interface ICheckboxGroupProvide {
+  changeEvent?: (val:unknown) => void,
+  modelValue?: ComputedRef,
+  name?: string
 }
