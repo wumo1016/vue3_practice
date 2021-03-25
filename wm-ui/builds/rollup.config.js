@@ -30,7 +30,7 @@ export default inputs.map(name => {
             })
         ],
         external(id) { // 对vue本身 和 自己写的包 都排除掉不打包
-            return /^vue/.test(id) ||  /^@z-ui/.test(id)
+            return /^vue/.test(id) ||  /^@wm-ui/.test(id)
         },
     }
 })
