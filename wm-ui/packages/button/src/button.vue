@@ -34,6 +34,7 @@ export default defineComponent({
       type: String as PropType<ButtonType>,
       default: '',
       validator: (v: string) => {
+        if(v === '') return true
         return [
           'primary',
           'warning',

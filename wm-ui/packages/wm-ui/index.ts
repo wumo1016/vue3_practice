@@ -6,9 +6,10 @@ import Row from '@wm-ui/row'
 import Col from '@wm-ui/col'
 import Checkbox from '@wm-ui/checkbox'
 import CheckboxGroup from '@wm-ui/checkbox-group'
-import WmTransfer from '@wm-ui/transfer'
+import Transfer from '@wm-ui/transfer'
+import Message from '@wm-ui/message'
 
-const components = [
+const components = {
   Icon,
   Button,
   ButtonGroup,
@@ -16,17 +17,20 @@ const components = [
   Col,
   Checkbox,
   CheckboxGroup,
-  WmTransfer,
-]
+  Transfer,
+  Message
+}
 
 const install = (app: App): void => {
-  components.forEach(component => {
-    app.component(component.name, component)
+  Object.keys(components).forEach(key => {
+    const component = components[key]
+    app.use(component)
   })
 }
 
 export default {
-  install
+  install,
+  ...components,
 }
 
 // 打包esm

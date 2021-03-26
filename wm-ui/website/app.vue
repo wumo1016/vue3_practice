@@ -4,15 +4,27 @@
     <h3>Button 按钮</h3>
     <div class="module_wrapper button_wrapper">
       <wm-button>默认按钮</wm-button>
-      <wm-button type="primary" disabled>禁用按钮</wm-button>
+      <wm-button
+        type="primary"
+        disabled
+      >禁用按钮</wm-button>
       <wm-button type="primary">主要按钮</wm-button>
       <wm-button type="success">成功按钮</wm-button>
       <wm-button type="info">信息按钮</wm-button>
       <wm-button type="warning">警告按钮</wm-button>
       <wm-button type="danger">危险按钮</wm-button>
-      <wm-button type="primary" round>圆角按钮</wm-button>
-      <wm-button icon="wm-icon-search" type="primary">带图标按钮</wm-button>
-      <wm-button loading type="primary">loading按钮</wm-button>
+      <wm-button
+        type="primary"
+        round
+      >圆角按钮</wm-button>
+      <wm-button
+        icon="wm-icon-search"
+        type="primary"
+      >带图标按钮</wm-button>
+      <wm-button
+        loading
+        type="primary"
+      >loading按钮</wm-button>
     </div>
     <h3>Button 按钮组</h3>
     <div class="module_wrapper button_group_wrapper">
@@ -43,10 +55,16 @@
         </wm-col>
       </wm-row>
       <wm-row>
-        <wm-col span="10" offset="2">
+        <wm-col
+          span="10"
+          offset="2"
+        >
           <div class="bg-purple">1</div>
         </wm-col>
-        <wm-col span="10" offset="2">
+        <wm-col
+          span="10"
+          offset="2"
+        >
           <div class="bg-purple-dark">1</div>
         </wm-col>
       </wm-row>
@@ -58,7 +76,10 @@
           <div class="bg-purple">1</div>
         </wm-col>
       </wm-row>
-      <wm-row gutter="10" justify="space-between">
+      <wm-row
+        gutter="10"
+        justify="space-between"
+      >
         <wm-col span="4">
           <div class="bg-purple">1</div>
         </wm-col>
@@ -81,6 +102,7 @@
         <wm-checkbox label="天津"></wm-checkbox>
       </wm-checkbox-group>
     </div>
+    <!-- transfer -->
     <h3>Transfer 穿梭框</h3>
     <div class="module_wrapper transfer_wrapper">
       <wm-transfer
@@ -89,32 +111,53 @@
         :props="transferProp"
       ></wm-transfer>
     </div>
+    <!-- message -->
+    <h3>Message 消息提示</h3>
+    <div class="module_wrapper message_wrapper">
+      <wm-button
+        type="primary"
+        @click="showMessage('success', '成功')"
+      >成功</wm-button>
+      <wm-button
+        type="primary"
+        @click="showMessage('warning', '警告')"
+      >警告</wm-button>
+      <wm-button
+        type="primary"
+        @click="showMessage('info', '消息')"
+      >消息</wm-button>
+      <wm-button
+        type="primary"
+        @click="showMessage('error', '错误')"
+      >错误</wm-button>
+    </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from "vue";
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import Message from '../packages/message'
 
 function useCheckbox() {
-  const checkValue = ref(true);
+  const checkValue = ref(true)
   const checkGroupValue = ref([
-    "上海",
-    "北京",
+    '上海',
+    '北京',
     // '天津',
-  ]);
+  ])
 
-  const transferData = (_) => {
-    const data = [];
+  const transferData = () => {
+    const data = []
     for (let i = 1; i <= 15; i++) {
       data.push({
         key: i,
         label: `备选项 ${i}`,
         disabled: i % 4 === 0,
-      });
+      })
     }
-    return ref(data);
-  };
-  const transferValue = ref([1, 4]);
+    return ref(data)
+  }
+  const transferValue = ref([1, 4])
 
   return {
     checkValue,
@@ -122,24 +165,30 @@ function useCheckbox() {
     transferData: transferData(),
     transferValue,
     transferProp: {
-      key: "key",
-      label: "label",
-      disabled: "disabled",
+      key: 'key',
+      label: 'label',
+      disabled: 'disabled',
     },
-  };
+  }
 }
 
 export default defineComponent({
   setup() {
     const handle = (value) => {
-      console.log("change", value);
-    };
+      console.log('change', value)
+    }
+
+    const showMessage = (type, message) => {
+      Message({ type, message })
+    }
+
     return {
       handle,
       ...useCheckbox(),
-    };
+      showMessage,
+    }
   },
-});
+})
 </script>
 <style lang="scss">
 * {
@@ -210,6 +259,11 @@ body {
   .checkbox_group_wrapper {
     .wm-checkbox {
       margin-right: 10px;
+    }
+  }
+  .message_wrapper {
+    .wm-button {
+      margin-right: 5px;
     }
   }
 }

@@ -1,0 +1,63 @@
+@import './common/var.scss';
+@import './mixins/config.scss';
+@import './mixins/mixin.scss';
+
+@include b(message) {
+
+  min-width: 380px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ebeef5;
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  background-color: #edf2fc;
+  transition: all .4s;
+  overflow: hidden;
+  padding: 15px 15px 15px 20px;
+  display: flex;
+  align-items: center;
+
+  >i {
+    margin-right: 10px;
+  }
+
+  @include m(success) {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+    color: #67C23A;
+  }
+
+  @include m(warning) {
+    background-color: #fdf6ec;
+    border-color: #faecd8;
+    color: #E6A23C;
+  }
+
+  @include m(info) {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+    color: #909399;
+  }
+
+  @include m(error) {
+    background-color: #fef0f0;
+    border-color: #fde2e2;
+    color: #F56C6C;
+  }
+
+  @include when(center) {
+    justify-content: center;
+  }
+}
+
+.wm-message-fade-enter-active,
+.wm-message-fade-leave-active {
+  opacity: 1;
+}
+
+.wm-message-fade-enter-from,
+.wm-message-fade-leave-to {
+  opacity: 0;
+}

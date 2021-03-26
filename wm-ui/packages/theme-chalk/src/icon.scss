@@ -556,6 +556,10 @@
     content: "\e687";
 }
 
+.wm-icon-info:before {
+    content: "\e686";
+}
+
 .wm-icon-direction-down-circle:before {
     content: "\e688";
 }
@@ -741,10 +745,12 @@
         // transform: rotate(0);
         opacity: 1;
     }
+
     50% {
         // transform: rotate(1turn);
         opacity: 0;
     }
+
     100% {
         // transform: rotate(1turn);
         opacity: 1;
