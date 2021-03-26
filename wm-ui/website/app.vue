@@ -116,8 +116,6 @@ function useCheckbox() {
   };
   const transferValue = ref([1, 4]);
 
-  // 9160177243dd40dd8e7e2b63867c60d0
-
   return {
     checkValue,
     checkGroupValue,
