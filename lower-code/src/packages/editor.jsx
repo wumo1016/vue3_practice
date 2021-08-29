@@ -1,4 +1,4 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
 import './editor.scss'
 import EditorBlock from './editor-block.jsx'
 
@@ -23,9 +23,20 @@ export default defineComponent({
       height: data.value.container.height + 'px'
     }))
 
+    const config = inject('config')
+
     return () => (
       <div class="editor">
-        <div class="editor-left">左侧</div>
+        <div class="editor-left">
+          {config.componentList.map(component => {
+            return (
+              <div class="editor-left-item">
+                <span>{component.label}</span>
+                <div>{component.preview()}</div>
+              </div>
+            )
+          })}
+        </div>
         <div class="editor-top">顶部</div>
         <div class="editor-container">
           <div class="editor-container__content" style={containerStyles.value}>
