@@ -1,8 +1,10 @@
-import { computed, defineComponent, inject, nextTick, ref } from 'vue'
+import { defineComponent, inject, ref, computed } from 'vue'
 import './editor.scss'
 import EditorBlock from './editor-block.jsx'
 import deepcopy from 'deepcopy'
 import { useDragger } from './useDragger'
+import useFocus from './useFocus'
+import useConDragger from './useConDragger'
 
 export default defineComponent({
   components: {
@@ -23,7 +25,7 @@ export default defineComponent({
         ctx.emit('update:modelValue', deepcopy(value))
       }
     })
-
+    // 容器宽高
     const containerStyles = computed(() => ({
       width: data.value.container.width + 'px',
       height: data.value.container.height + 'px'
@@ -33,33 +35,17 @@ export default defineComponent({
     // 容器dom
     const containerRef = ref(null)
 
-    // 清空所有的聚焦
-    const clearBlockFocus = () => {
-      data.value.blocks.forEach(block => {
-        block.focus = false
-      })
-    }
     // 拖拽事件 从左侧拖到内容区
     const { dragstart, dragend } = useDragger(data, containerRef)
-    // 内容区内的拖拽
-    const blockMousedown = (e, block) => {
-      e.preventDefault()
-      e.stopPropagation()
-      // 定义当前component是否聚焦
-      // 如果没有按下shift键 就直接清空
-      if (block.focus) {
-        block.focus = false
-      } else {
-        if (!e.shiftKey) {
-          clearBlockFocus()
-        }
-        block.focus = true
+    // 聚焦事件
+    const { blockMousedown, containerMousedown, focusData } = useFocus(
+      data,
+      e => {
+        mousedown(e)
       }
-    }
-    // 内容区的鼠标点击事件
-    const containerMousedown = e => {
-      clearBlockFocus()
-    }
+    )
+    // 内容区拖拽
+    const { mousedown } = useConDragger(focusData)
 
     return () => (
       <div class="editor">
