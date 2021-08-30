@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject } from 'vue'
+import { computed, defineComponent, inject, onMounted, ref } from 'vue'
 
 export default defineComponent({
   props: {
@@ -8,14 +8,22 @@ export default defineComponent({
   },
   setup(props) {
     const config = inject('config')
-    // console.log(config)
+
+    const refBlock = ref(null)
+
+    onMounted(() => {
+      let { offsetHeight, offsetWidth } = refBlock.value
+      if (props.block.alignCenter) {
+        props.block.left = props.block.left - offsetWidth / 2
+        props.block.top = props.block.top - offsetHeight / 2
+        props.block.alignCenter = false
+      }
+    })
 
     const blockStyles = computed(() => ({
       top: `${props.block.top}px`,
       left: `${props.block.left}px`,
-      zIndex: `${props.block.zIndex}`,
-      width: '200px',
-      height: '50px'
+      zIndex: `${props.block.zIndex}`
     }))
 
     return () => {
@@ -23,7 +31,7 @@ export default defineComponent({
       const componentRender = component.render
 
       return (
-        <div class="editor-block" style={blockStyles.value}>
+        <div ref={refBlock} class="editor-block" style={blockStyles.value}>
           {componentRender()}
         </div>
       )
