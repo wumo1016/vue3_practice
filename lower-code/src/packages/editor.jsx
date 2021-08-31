@@ -47,7 +47,7 @@ export default defineComponent({
       mousedown(e)
     })
     // 内容区拖拽
-    const { mousedown } = useConDragger(focusData, lastSelectBlock)
+    const { mousedown, markline } = useConDragger(focusData, lastSelectBlock)
 
     return () => (
       <div class="editor">
@@ -74,6 +74,16 @@ export default defineComponent({
             ref={containerRef}
             onMousedown={containerMousedown}
           >
+            {markline.x !== null ? (
+              <div class="line-x" style={{ left: markline.x + 'px' }}></div>
+            ) : (
+              ''
+            )}
+            {markline.y !== null ? (
+              <div class="line-y" style={{ top: markline.y + 'px' }}></div>
+            ) : (
+              ''
+            )}
             {data.value.blocks.map((block, index) => (
               <EditorBlock
                 onMousedown={e => blockMousedown(e, block, index)}

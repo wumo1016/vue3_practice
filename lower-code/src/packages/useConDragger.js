@@ -1,5 +1,12 @@
+import { reactive } from 'vue'
+
 export default (focusData, lastSelectBlock) => {
   let drapState = {}
+  // 参考的位置
+  let markline = reactive({
+    x: null,
+    y: null
+  })
   // 被拖动元素B 参考元素A
   const mousedown = e => {
     const { width: BWidth, height: BHeight } = lastSelectBlock.value
@@ -77,28 +84,48 @@ export default (focusData, lastSelectBlock) => {
     document.addEventListener('mouseup', mouseup)
   }
   const mouseover = e => {
-    let { clientX, clientY } = e
-    let { startX, startY, startLeft, startTop } = drapState
-    let moveX = clientX - startX
-    let moveY = clientY - startY
+    let { clientX: endClientX, clientY: endClientY } = e
+    let {
+      startX: startClientX,
+      startY: startClientY,
+      startLeft,
+      startTop
+    } = drapState
+    // 鼠标移动的距离
+    let moveX = endClientX - startClientX
+    let moveY = endClientY - startClientY
 
     // 计算被拖动元素最新的位置
-    const left = moveX + startLeft
-    const top = moveY + startTop
+    let left = moveX + startLeft
+    let top = moveY + startTop
 
-    const leftTarget = drapState.lines.left.find(
-      v =>
-        v.showLeft >= left - 10 &&
-        v.showLeft <= top + 10
-    )
-    console.log(leftTarget)
+    let marklineY = null
+    let marklineX = null
+    for (let i = 0; i < drapState.lines.top.length; i++) {
+      const target = drapState.lines.top[i]
+      if (Math.abs(target.top - top) < 5) {
+        moveY = target.top - startTop
+        marklineY = target.showTop
+        break
+      }
+    }
+
+    for (let i = 0; i < drapState.lines.left.length; i++) {
+      const target = drapState.lines.left[i]
+      if (Math.abs(target.left - left) < 5) {
+        moveX = target.left - startLeft
+        marklineX = target.showLeft
+        break
+      }
+    }
+
+    markline.x = marklineX
+    markline.y = marklineY
 
     focusData.value.focus.forEach((block, idx) => {
       block.left = drapState.startPos[idx].left + moveX
       block.top = drapState.startPos[idx].top + moveY
     })
-
-
   }
   const mouseup = () => {
     document.removeEventListener('mousedown', mousedown)
@@ -107,6 +134,7 @@ export default (focusData, lastSelectBlock) => {
   }
 
   return {
-    mousedown
+    mousedown,
+    markline
   }
 }
