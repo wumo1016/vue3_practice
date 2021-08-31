@@ -38,14 +38,16 @@ export default defineComponent({
     // 拖拽事件 从左侧拖到内容区
     const { dragstart, dragend } = useDragger(data, containerRef)
     // 聚焦事件
-    const { blockMousedown, containerMousedown, focusData } = useFocus(
-      data,
-      e => {
-        mousedown(e)
-      }
-    )
+    const {
+      blockMousedown,
+      containerMousedown,
+      focusData,
+      lastSelectBlock
+    } = useFocus(data, e => {
+      mousedown(e)
+    })
     // 内容区拖拽
-    const { mousedown } = useConDragger(focusData)
+    const { mousedown } = useConDragger(focusData, lastSelectBlock)
 
     return () => (
       <div class="editor">
@@ -72,9 +74,9 @@ export default defineComponent({
             ref={containerRef}
             onMousedown={containerMousedown}
           >
-            {data.value.blocks.map(block => (
+            {data.value.blocks.map((block, index) => (
               <EditorBlock
-                onMousedown={e => blockMousedown(e, block)}
+                onMousedown={e => blockMousedown(e, block, index)}
                 class={block.focus ? 'editor-block-focus' : ''}
                 block={block}
               />
