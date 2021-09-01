@@ -1,3 +1,5 @@
+import events from "./events"
+
 export function useDragger(data, containerRef) {
   let currentComponent = null
 
@@ -34,6 +36,7 @@ export function useDragger(data, containerRef) {
     dom.addEventListener('dragleave', dragleave)
     dom.addEventListener('drop', drop)
     currentComponent = component
+    events.emit('start')
   }
 
   const dragend = e => {
@@ -42,6 +45,7 @@ export function useDragger(data, containerRef) {
     dom.removeEventListener('dragover', dragover)
     dom.removeEventListener('dragleave', dragleave)
     dom.removeEventListener('drop', drop)
+    events.emit('end')
   }
 
   return {

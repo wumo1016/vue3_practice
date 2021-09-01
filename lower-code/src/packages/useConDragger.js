@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 
-export default (focusData, lastSelectBlock) => {
+export default (focusData, lastSelectBlock, data) => {
   let drapState = {}
   // 参考的位置
   let markline = reactive({
@@ -21,7 +21,15 @@ export default (focusData, lastSelectBlock) => {
         // 拿到所有没有选中的组件
         const { unFocus } = focusData.value
         let lines = { left: [], top: [] }
-        unFocus.forEach(block => {
+        ;[
+          ...unFocus,
+          {
+            top: 0,
+            left: 0,
+            width: data.value.container.width,
+            height: data.value.container.height
+          }
+        ].forEach(block => {
           const {
             top: ATop,
             left: ALeft,
@@ -128,6 +136,8 @@ export default (focusData, lastSelectBlock) => {
     })
   }
   const mouseup = () => {
+    markline.x = null
+    markline.y = null
     document.removeEventListener('mousedown', mousedown)
     document.removeEventListener('mouseup', mouseup)
     document.removeEventListener('mouseover', mouseover)

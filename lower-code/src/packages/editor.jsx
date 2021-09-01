@@ -5,6 +5,7 @@ import deepcopy from 'deepcopy'
 import { useDragger } from './useDragger'
 import useFocus from './useFocus'
 import useConDragger from './useConDragger'
+import useCommand from './useCommand'
 
 export default defineComponent({
   components: {
@@ -47,7 +48,18 @@ export default defineComponent({
       mousedown(e)
     })
     // 内容区拖拽
-    const { mousedown, markline } = useConDragger(focusData, lastSelectBlock)
+    const { mousedown, markline } = useConDragger(
+      focusData,
+      lastSelectBlock,
+      data
+    )
+
+    const { commands } = useCommand(data)
+
+    const buttons = [
+      { label: '撤销', icon: 'icon-back', handler: () => commands.undo() },
+      { label: '重做', icon: 'icon-forward', handler: () => commands.redo() }
+    ]
 
     return () => (
       <div class="editor">
@@ -66,7 +78,16 @@ export default defineComponent({
             )
           })}
         </div>
-        <div class="editor-top">顶部</div>
+        <div class="editor-top">
+          {buttons.map((btn, index) => {
+            return (
+              <div class="editor-top-button" onClick={btn.handler}>
+                <i class={btn.icon}></i>
+                <span>{btn.label}</span>
+              </div>
+            )
+          })}
+        </div>
         <div class="editor-container">
           <div
             class="editor-container__content"
