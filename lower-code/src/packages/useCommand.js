@@ -13,42 +13,53 @@ export default data => {
 
   const register = command => {
     state.commanArray.push(command)
+    // 拖拽完成执行的命令
     state.commands[command.name] = () => {
       const { redo, undo } = command.execute()
       redo()
       if (!command.pushQueue) return
-      const { cur, queue } = state
+      let { cur, queue } = state
 
       // 组件1 => 组件2 => 组件3 => 撤回2次 => 组件4
       // 组件1 => 组件4
+      // 再次添加前 如果有撤销动作 将撤销的添加动作删除
       if (queue.length > 0) {
-        queue.slice(0, cur + 1)
+        state.queue = queue.slice(0, cur + 1)
       }
 
       state.queue.push({ redo, undo }) // 保存前进与后退
       state.cur++
     }
   }
-
+  // 注册重做函数
   register({
     name: 'redo',
     keybord: 'ctrl+y',
     execute() {
       return {
         redo() {
-          console.log('重做')
+          let item = state.queue[state.cur + 1]
+          if (item) {
+            item.redo && item.redo()
+            state.cur++
+          }
         }
       }
     }
   })
-
+  // 注册撤销函数
   register({
     name: 'undo',
     keyboard: 'ctrl+z',
     execute() {
       return {
         redo() {
-          console.log('撤销')
+          if (state.cur === -1) return
+          let item = state.queue[state.cur]
+          if (item) {
+            item.undo && item.undo()
+            state.cur--
+          }
         }
       }
     }
@@ -81,7 +92,6 @@ export default data => {
       return {
         redo() {
           data.value = { ...data.value, blocks: after }
-          console.log(12345)
         },
         undo() {
           data.value = { ...data.value, blocks: before }
@@ -89,11 +99,7 @@ export default data => {
       }
     }
   })
-  // ;(() => {
-  //   state.commanArray.forEach(
-  //     command => command.init && state.detoryArray.push(command.init())
-  //   )
-  // })()
+
   state.commanArray.forEach(
     command => command.init && state.detoryArray.push(command.init())
   )
