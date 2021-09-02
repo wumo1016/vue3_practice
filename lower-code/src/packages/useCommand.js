@@ -104,6 +104,34 @@ export default data => {
     command => command.init && state.detoryArray.push(command.init())
   )
 
+  // 注册键盘事件
+  const keyBoard = () => {
+    const keyCodes = {
+      90: 'z',
+      89: 'y'
+    }
+    const onKeydown = e => {
+      const { ctrlKey, keyCode } = e
+      const codeString = keyCodes[keyCode]
+      let keySring = ''
+      if (ctrlKey && codeString) {
+        keySring = `ctrl+${codeString}`
+        state.commanArray.forEach(({ keyboard, name }) => {
+          if (keyboard && keyboard === keySring) {
+            state.commands[name]()
+            e.preventDefault()
+          }
+        })
+      }
+    }
+    document.addEventListener('keydown', onKeydown)
+    // 返回销毁事件
+    return () => {
+      document.removeEventListener('keydown', onKeydown)
+    }
+  }
+
+  state.detoryArray.push(keyBoard())
   onUnmounted(() => {
     state.detoryArray.forEach(fn => fn && fn())
   })

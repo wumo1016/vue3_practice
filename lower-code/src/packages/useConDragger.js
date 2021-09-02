@@ -1,7 +1,10 @@
 import { reactive } from 'vue'
+import events from './events'
 
 export default (focusData, lastSelectBlock, data) => {
-  let drapState = {}
+  let drapState = {
+    dragging: false // 是否正在拖拽
+  }
   // 参考的位置
   let markline = reactive({
     x: null,
@@ -12,6 +15,7 @@ export default (focusData, lastSelectBlock, data) => {
     const { width: BWidth, height: BHeight } = lastSelectBlock.value
 
     drapState = {
+      dragging: false,
       startX: e.clientX,
       startY: e.clientY,
       startLeft: lastSelectBlock.value.left, // 被拖动元素 left
@@ -94,11 +98,16 @@ export default (focusData, lastSelectBlock, data) => {
   const mouseover = e => {
     let { clientX: endClientX, clientY: endClientY } = e
     let {
+      dragging,
       startX: startClientX,
       startY: startClientY,
       startLeft,
       startTop
     } = drapState
+    if (!dragging) {
+      drapState.dragging = true
+      events.emit('start')
+    }
     // 鼠标移动的距离
     let moveX = endClientX - startClientX
     let moveY = endClientY - startClientY
@@ -138,9 +147,11 @@ export default (focusData, lastSelectBlock, data) => {
   const mouseup = () => {
     markline.x = null
     markline.y = null
-    document.removeEventListener('mousedown', mousedown)
     document.removeEventListener('mouseup', mouseup)
     document.removeEventListener('mouseover', mouseover)
+    if (drapState.dragging) {
+      events.emit('end')
+    }
   }
 
   return {
