@@ -83,6 +83,16 @@ export default defineComponent({
             }
           })
         }
+      },
+      {
+        label: '置顶',
+        icon: 'icon-place-top',
+        handler: () => commands.placeTop(focusData)
+      },
+      {
+        label: '置底',
+        icon: 'icon-place-bottom',
+        handler: () => commands.placeBottom(focusData)
       }
     ]
 
