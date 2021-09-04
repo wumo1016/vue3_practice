@@ -177,7 +177,7 @@ export default data => {
       }
     }
   })
-  // 注册置底 找到所有未选中block中最大的再加1
+  // 注册删除
   register({
     name: 'delete',
     pushQueue: true,

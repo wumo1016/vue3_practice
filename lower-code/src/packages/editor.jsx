@@ -19,6 +19,9 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, ctx) {
+    // 是否是预览状态 不能移动 可以操作
+    const preview = ref(true)
+
     const data = computed({
       get() {
         return props.modelValue
@@ -44,8 +47,9 @@ export default defineComponent({
       blockMousedown,
       containerMousedown,
       focusData,
-      lastSelectBlock
-    } = useFocus(data, e => {
+      lastSelectBlock,
+      clearBlockFocus
+    } = useFocus(data, preview, e => {
       mousedown(e)
     })
     // 内容区拖拽
@@ -98,6 +102,14 @@ export default defineComponent({
         label: '删除',
         icon: 'icon-delete',
         handler: () => commands.delete(focusData)
+      },
+      {
+        label: () => (preview.value ? '编辑' : '预览'),
+        icon: () => (preview.value ? 'icon-edit' : 'icon-preview'),
+        handler: () => {
+          preview.value = !preview.value
+          clearBlockFocus()
+        }
       }
     ]
 
@@ -120,10 +132,13 @@ export default defineComponent({
         </div>
         <div class="editor-top">
           {buttons.map((btn, index) => {
+            const icon = typeof btn.icon === 'function' ? btn.icon() : btn.icon
+            const label =
+              typeof btn.label === 'function' ? btn.label() : btn.label
             return (
               <div class="editor-top-button" onClick={btn.handler}>
-                <i class={btn.icon}></i>
-                <span>{btn.label}</span>
+                <i class={icon}></i>
+                <span>{label}</span>
               </div>
             )
           })}
@@ -149,6 +164,7 @@ export default defineComponent({
               <EditorBlock
                 onMousedown={e => blockMousedown(e, block, index)}
                 class={block.focus ? 'editor-block-focus' : ''}
+                class={preview.value ? 'editor-block-preview' : ''}
                 block={block}
               />
             ))}

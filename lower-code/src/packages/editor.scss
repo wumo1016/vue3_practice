@@ -101,6 +101,12 @@
   }
 }
 
+.editor-block-preview {
+  &::after {
+    display: none;
+  }
+}
+
 .editor-block-focus {
   &::after {
     border: 3px dashed red;
