@@ -177,6 +177,23 @@ export default data => {
       }
     }
   })
+  // 注册置底 找到所有未选中block中最大的再加1
+  register({
+    name: 'delete',
+    pushQueue: true,
+    execute(focusData) {
+      let before = deepcopy(data.value.blocks)
+      let after = focusData.value.unFocus
+      return {
+        redo() {
+          data.value = { ...data.value, blocks: after }
+        },
+        undo() {
+          data.value = { ...data.value, blocks: before }
+        }
+      }
+    }
+  })
 
   state.commanArray.forEach(
     command => command.init && state.detoryArray.push(command.init())

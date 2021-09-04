@@ -93,6 +93,11 @@ export default defineComponent({
         label: '置底',
         icon: 'icon-place-bottom',
         handler: () => commands.placeBottom(focusData)
+      },
+      {
+        label: '删除',
+        icon: 'icon-delete',
+        handler: () => commands.delete(focusData)
       }
     ]
 
