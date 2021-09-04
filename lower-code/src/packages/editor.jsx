@@ -7,6 +7,7 @@ import useFocus from './useFocus'
 import useConDragger from './useConDragger'
 import useCommand from './useCommand'
 import $dialog from '../components/dialog'
+import { ElButton } from 'element-plus'
 
 export default defineComponent({
   components: {
@@ -20,7 +21,8 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, ctx) {
     // 是否是预览状态 不能移动 可以操作
-    const preview = ref(true)
+    const previewRef = ref(false)
+    const editRef = ref(true)
 
     const data = computed({
       get() {
@@ -49,7 +51,7 @@ export default defineComponent({
       focusData,
       lastSelectBlock,
       clearBlockFocus
-    } = useFocus(data, preview, e => {
+    } = useFocus(data, previewRef, e => {
       mousedown(e)
     })
     // 内容区拖拽
@@ -104,74 +106,97 @@ export default defineComponent({
         handler: () => commands.delete(focusData)
       },
       {
-        label: () => (preview.value ? '编辑' : '预览'),
-        icon: () => (preview.value ? 'icon-edit' : 'icon-preview'),
+        label: () => (previewRef.value ? '编辑' : '预览'),
+        icon: () => (previewRef.value ? 'icon-edit' : 'icon-browse'),
         handler: () => {
-          preview.value = !preview.value
+          previewRef.value = !previewRef.value
+          clearBlockFocus()
+        }
+      },
+      {
+        label: '关闭',
+        icon: 'icon-close',
+        handler: () => {
+          editRef.value = false
           clearBlockFocus()
         }
       }
     ]
 
-    return () => (
-      <div class="editor">
-        <div class="editor-left">
-          {config.componentList.map(component => {
-            return (
-              <div
-                class="editor-left-item"
-                draggable
-                onDragstart={e => dragstart(e, component)}
-                onDragend={e => dragend(e, component)}
-              >
-                <span>{component.label}</span>
-                <div>{component.preview()}</div>
-              </div>
-            )
-          })}
+    return () =>
+      editRef.value ? (
+        <div class="editor">
+          <div class="editor-left">
+            {config.componentList.map(component => {
+              return (
+                <div
+                  class="editor-left-item"
+                  draggable
+                  onDragstart={e => dragstart(e, component)}
+                  onDragend={e => dragend(e, component)}
+                >
+                  <span>{component.label}</span>
+                  <div>{component.preview()}</div>
+                </div>
+              )
+            })}
+          </div>
+          <div class="editor-top">
+            {buttons.map((btn, index) => {
+              const icon =
+                typeof btn.icon === 'function' ? btn.icon() : btn.icon
+              const label =
+                typeof btn.label === 'function' ? btn.label() : btn.label
+              return (
+                <div class="editor-top-button" onClick={btn.handler}>
+                  <i class={icon}></i>
+                  <span>{label}</span>
+                </div>
+              )
+            })}
+          </div>
+          <div class="editor-container">
+            <div
+              class="editor-container__content"
+              style={containerStyles.value}
+              ref={containerRef}
+              onMousedown={containerMousedown}
+            >
+              {markline.x !== null ? (
+                <div class="line-x" style={{ left: markline.x + 'px' }}></div>
+              ) : (
+                ''
+              )}
+              {markline.y !== null ? (
+                <div class="line-y" style={{ top: markline.y + 'px' }}></div>
+              ) : (
+                ''
+              )}
+              {data.value.blocks.map((block, index) => (
+                <EditorBlock
+                  onMousedown={e => blockMousedown(e, block, index)}
+                  class={block.focus ? 'editor-block-focus' : ''}
+                  class={previewRef.value ? 'editor-block-preview' : ''}
+                  block={block}
+                />
+              ))}
+            </div>
+          </div>
+          <div class="editor-right">右侧</div>
         </div>
-        <div class="editor-top">
-          {buttons.map((btn, index) => {
-            const icon = typeof btn.icon === 'function' ? btn.icon() : btn.icon
-            const label =
-              typeof btn.label === 'function' ? btn.label() : btn.label
-            return (
-              <div class="editor-top-button" onClick={btn.handler}>
-                <i class={icon}></i>
-                <span>{label}</span>
-              </div>
-            )
-          })}
-        </div>
-        <div class="editor-container">
-          <div
-            class="editor-container__content"
-            style={containerStyles.value}
-            ref={containerRef}
-            onMousedown={containerMousedown}
-          >
-            {markline.x !== null ? (
-              <div class="line-x" style={{ left: markline.x + 'px' }}></div>
-            ) : (
-              ''
-            )}
-            {markline.y !== null ? (
-              <div class="line-y" style={{ top: markline.y + 'px' }}></div>
-            ) : (
-              ''
-            )}
+      ) : (
+        <>
+          <div class="editor-container__content" style={containerStyles.value}>
             {data.value.blocks.map((block, index) => (
-              <EditorBlock
-                onMousedown={e => blockMousedown(e, block, index)}
-                class={block.focus ? 'editor-block-focus' : ''}
-                class={preview.value ? 'editor-block-preview' : ''}
-                block={block}
-              />
+              <EditorBlock class={'editor-block-preview'} block={block} />
             ))}
           </div>
-        </div>
-        <div class="editor-right">右侧</div>
-      </div>
-    )
+          <div>
+            <ElButton type="primary" onClick={() => (editRef.value = true)}>
+              返回编辑
+            </ElButton>
+          </div>
+        </>
+      )
   }
 })

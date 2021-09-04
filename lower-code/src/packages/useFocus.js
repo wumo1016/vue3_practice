@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 
-export default (data, preview, callback) => {
+export default (data, previewRef, callback) => {
   const selectIndex = ref(-1) // 表示选中组件的最后一个的索引
   // 最后选择的组件 作辅佐线用
   const lastSelectBlock = computed(() => {
@@ -23,7 +23,7 @@ export default (data, preview, callback) => {
   }
   // 内容区内的拖拽
   const blockMousedown = (e, block, index) => {
-    if (preview.value) return
+    if (previewRef.value) return
     e.preventDefault()
     e.stopPropagation()
     // 定义当前component是否聚焦
@@ -39,7 +39,7 @@ export default (data, preview, callback) => {
   }
   // 内容区的鼠标点击事件
   const containerMousedown = e => {
-    if (preview.value) return
+    if (previewRef.value) return
     clearBlockFocus()
     selectIndex.value = -1
   }
