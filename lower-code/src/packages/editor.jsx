@@ -1,11 +1,12 @@
 import { defineComponent, inject, ref, computed } from 'vue'
 import './editor.scss'
-import EditorBlock from './editor-block.jsx'
+import EditorBlock from './editor-block'
 import deepcopy from 'deepcopy'
 import { useDragger } from './useDragger'
 import useFocus from './useFocus'
 import useConDragger from './useConDragger'
 import useCommand from './useCommand'
+import $dialog from '../components/dialog'
 
 export default defineComponent({
   components: {
@@ -58,7 +59,31 @@ export default defineComponent({
 
     const buttons = [
       { label: '撤销', icon: 'icon-back', handler: () => commands.undo() },
-      { label: '重做', icon: 'icon-forward', handler: () => commands.redo() }
+      { label: '重做', icon: 'icon-forward', handler: () => commands.redo() },
+      {
+        label: '导出',
+        icon: 'icon-export',
+        handler: () => {
+          $dialog({
+            title: '导出json',
+            content: JSON.stringify(data.value)
+          })
+        }
+      },
+      {
+        label: '导入',
+        icon: 'icon-import',
+        handler: () => {
+          $dialog({
+            title: '导入json',
+            content: '',
+            footer: true,
+            confirm(content) {
+              commands.updateData(JSON.parse(content))
+            }
+          })
+        }
+      }
     ]
 
     return () => (

@@ -14,8 +14,8 @@ export default data => {
   const register = command => {
     state.commanArray.push(command)
     // 拖拽完成执行的命令
-    state.commands[command.name] = () => {
-      const { redo, undo } = command.execute()
+    state.commands[command.name] = (...args) => {
+      const { redo, undo } = command.execute(...args)
       redo()
       if (!command.pushQueue) return
       let { cur, queue } = state
@@ -64,7 +64,7 @@ export default data => {
       }
     }
   })
-
+  // 注册拖拽函数
   register({
     name: 'drag',
     pushQueue: true,
@@ -95,6 +95,23 @@ export default data => {
         },
         undo() {
           data.value = { ...data.value, blocks: before }
+        }
+      }
+    }
+  })
+  // 注册直接更新data函数
+  register({
+    name: 'updateData',
+    pushQueue: true,
+    execute(newData) {
+      let before = data.value
+      let after = newData
+      return {
+        redo() {
+          data.value = after
+        },
+        undo() {
+          data.value = before
         }
       }
     }
