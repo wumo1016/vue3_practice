@@ -6,8 +6,9 @@ import { useDragger } from './useDragger'
 import useFocus from './useFocus'
 import useConDragger from './useConDragger'
 import useCommand from './useCommand'
-import $dialog from '../components/dialog'
 import { ElButton } from 'element-plus'
+import $dialog from '../components/dialog'
+import $dropdown, { DropdownItem } from '../components/dropdown'
 
 export default defineComponent({
   components: {
@@ -123,6 +124,56 @@ export default defineComponent({
       }
     ]
 
+    const blockContextmenu = (e, block) => {
+      e.preventDefault()
+      $dropdown({
+        el: e.target,
+        content: () => (
+          <>
+            <DropdownItem
+              label="删除"
+              icon="icon-delete"
+              onClick={() => commands.delete(focusData)}
+            />
+            <DropdownItem
+              label="置顶"
+              icon="icon-place-top"
+              onClick={() => commands.placeTop(focusData)}
+            />
+            <DropdownItem
+              label="置底"
+              icon="icon-place-bottom"
+              onClick={() => commands.placeBottom(focusData)}
+            />
+            <DropdownItem
+              label="查看"
+              icon="icon-browse"
+              onClick={() =>
+                $dialog({
+                  title: '查看节点数据',
+                  content: JSON.stringify(block)
+                })
+              }
+            />
+            <DropdownItem
+              label="导入"
+              icon="icon-import"
+              onClick={() =>
+                $dialog({
+                  title: '导入节点数据',
+                  content: '',
+                  footer: true,
+                  confirm(text) {
+                    commands.updateBlock(JSON.parse(text), block)
+                  }
+                })
+              }
+            />
+          </>
+        )
+      })
+    }
+
     return () =>
       editRef.value ? (
         <div class="editor">
@@ -174,10 +225,11 @@ export default defineComponent({
               )}
               {data.value.blocks.map((block, index) => (
                 <EditorBlock
-                  onMousedown={e => blockMousedown(e, block, index)}
+                  block={block}
                   class={block.focus ? 'editor-block-focus' : ''}
                   class={previewRef.value ? 'editor-block-preview' : ''}
-                  block={block}
+                  onMousedown={e => blockMousedown(e, block, index)}
+                  onContextmenu={e => blockContextmenu(e, block)}
                 />
               ))}
             </div>

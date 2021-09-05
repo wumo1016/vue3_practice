@@ -194,6 +194,28 @@ export default data => {
       }
     }
   })
+  // 注册更新某一个节点数据
+  register({
+    name: 'updateBlock',
+    pushQueue: true,
+    execute(newBlock, oldBlock) {
+      let before = data.value.blocks
+      let after = () => {
+        const blocks = [...data.value.blocks]
+        const index = blocks.indexOf(oldBlock)
+        blocks.splice(index, 1, newBlock)
+        return blocks
+      }
+      return {
+        redo() {
+          data.value = { ...data.value, blocks: after() }
+        },
+        undo() {
+          data.value = { ...data.value, blocks: before }
+        }
+      }
+    }
+  })
 
   state.commanArray.forEach(
     command => command.init && state.detoryArray.push(command.init())
