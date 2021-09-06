@@ -9,6 +9,7 @@ import useCommand from './useCommand'
 import { ElButton } from 'element-plus'
 import $dialog from '../components/dialog'
 import $dropdown, { DropdownItem } from '../components/dropdown'
+import EditorOperator from '../components/editor-opeartor'
 
 export default defineComponent({
   components: {
@@ -234,7 +235,9 @@ export default defineComponent({
               ))}
             </div>
           </div>
-          <div class="editor-right">右侧</div>
+          <div class="editor-right">
+            <EditorOperator block={lastSelectBlock.value} data={data.value} />
+          </div>
         </div>
       ) : (
         <>
