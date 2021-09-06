@@ -101,7 +101,7 @@ export default data => {
   })
   // 注册直接更新data函数
   register({
-    name: 'updateData',
+    name: 'updateContainer',
     pushQueue: true,
     execute(newData) {
       let before = data.value

@@ -30,11 +30,14 @@ export default defineComponent({
 
     return () => {
       const component = config.componentMap[props.block.key]
-      const componentRender = component.render
+
+      const componentRender = component.render({
+        props: props.block.props
+      })
 
       return (
         <div ref={refBlock} class="editor-block" style={blockStyles.value}>
-          {componentRender()}
+          {componentRender}
         </div>
       )
     }

@@ -1,4 +1,4 @@
-import events from "./events"
+import events from './events'
 
 export function useDragger(data, containerRef) {
   let currentComponent = null
@@ -22,7 +22,8 @@ export function useDragger(data, containerRef) {
           left: e.offsetX,
           zIndex: 1,
           key: currentComponent.key,
-          alignCenter: true // 松手的时候居中
+          alignCenter: true, // 松手的时候居中
+          props: {}
         }
       ]
     }

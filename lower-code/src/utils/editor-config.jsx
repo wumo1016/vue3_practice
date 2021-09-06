@@ -38,8 +38,12 @@ registerConfig.register({
   preview() {
     return '预览文本'
   },
-  render() {
-    return '渲染文本'
+  render({ props }) {
+    return (
+      <span style={{ color: props.color, fontSize: props.size }}>
+        {props.text || '渲染文本'}
+      </span>
+    )
   },
   props: {
     text: createInputProp('输入文本内容'),
@@ -67,8 +71,12 @@ registerConfig.register({
   preview() {
     return <ElButton>预览按钮</ElButton>
   },
-  render() {
-    return <ElButton type="primary">渲染按钮</ElButton>
+  render({ props }) {
+    return (
+      <ElButton type={props.type} type={props.size}>
+        {props.text || '渲染按钮'}
+      </ElButton>
+    )
   },
   props: {
     text: createInputProp('按钮内容'),
