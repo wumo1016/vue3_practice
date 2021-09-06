@@ -23,7 +23,8 @@ export function useDragger(data, containerRef) {
           zIndex: 1,
           key: currentComponent.key,
           alignCenter: true, // 松手的时候居中
-          props: {}
+          props: {},
+          model: {},
         }
       ]
     }

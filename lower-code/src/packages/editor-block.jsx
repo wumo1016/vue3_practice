@@ -4,6 +4,9 @@ export default defineComponent({
   props: {
     block: {
       type: Object
+    },
+    formData: {
+      type: Object
     }
   },
   setup(props) {
@@ -30,9 +33,16 @@ export default defineComponent({
 
     return () => {
       const component = config.componentMap[props.block.key]
-
       const componentRender = component.render({
-        props: props.block.props
+        props: props.block.props,
+        model: Object.keys(component.model || {}).reduce((prev, modelName) => {
+          const propName = props.block.model[modelName]
+          prev[modelName] = {
+            modelValue: props.formData[propName],
+            'onUpdate:modelValue': v => (props.formData[propName] = v)
+          }
+          return prev
+        }, {})
       })
 
       return (

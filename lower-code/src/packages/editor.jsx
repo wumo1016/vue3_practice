@@ -18,6 +18,9 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Object
+    },
+    formData: {
+      type: Object
     }
   },
   emits: ['update:modelValue'],
@@ -227,6 +230,7 @@ export default defineComponent({
               {data.value.blocks.map((block, index) => (
                 <EditorBlock
                   block={block}
+                  formData={props.formData}
                   class={block.focus ? 'editor-block-focus' : ''}
                   class={previewRef.value ? 'editor-block-preview' : ''}
                   onMousedown={e => blockMousedown(e, block, index)}
@@ -239,6 +243,7 @@ export default defineComponent({
             <EditorOperator
               block={lastSelectBlock.value}
               data={data.value}
+              formData={props.formData}
               updateContainer={commands.updateContainer}
               updateBlock={commands.updateBlock}
             />

@@ -8,6 +8,7 @@ import {
   ElSelect,
   ElOption
 } from 'element-plus'
+import deepcopy from '_deepcopy@2.1.0@deepcopy'
 
 export default defineComponent({
   props: {
@@ -24,7 +25,7 @@ export default defineComponent({
 
     const reset = () => {
       if (props.block) {
-        state.editData = { ...(props.block.props || {}) }
+        state.editData = deepcopy(props.block)
       } else {
         state.editData = { ...props.data.container }
       }
@@ -33,13 +34,7 @@ export default defineComponent({
 
     const apply = () => {
       if (props.block) {
-        props.updateBlock(
-          {
-            ...props.block,
-            props: state.editData
-          },
-          props.block
-        )
+        props.updateBlock({ ...state.editData }, props.block)
       } else {
         props.updateContainer({
           ...props.data,
@@ -59,15 +54,15 @@ export default defineComponent({
                 <el-form-item label={config.label}>
                   {{
                     input: () => (
-                      <el-input v-model={state.editData[key]}></el-input>
+                      <el-input v-model={state.editData.props[key]}></el-input>
                     ),
                     color: () => (
                       <el-color-picker
-                        v-model={state.editData[key]}
+                        v-model={state.editData.props[key]}
                       ></el-color-picker>
                     ),
                     select: () => (
-                      <el-select v-model={state.editData[key]}>
+                      <el-select v-model={state.editData.props[key]}>
                         {config.options.map(item => (
                           <el-option
                             label={item.label}
@@ -77,6 +72,17 @@ export default defineComponent({
                       </el-select>
                     )
                   }[config.type]()}
+                </el-form-item>
+              )
+            })
+          )
+        }
+        if (component && component.model) {
+          content.push(
+            Object.entries(component.model).map(([key, label]) => {
+              return (
+                <el-form-item label={label}>
+                  <el-input v-model={state.editData.model[key]}></el-input>
                 </el-form-item>
               )
             })
