@@ -243,7 +243,6 @@ export default defineComponent({
             <EditorOperator
               block={lastSelectBlock.value}
               data={data.value}
-              formData={props.formData}
               updateContainer={commands.updateContainer}
               updateBlock={commands.updateBlock}
             />
@@ -253,7 +252,11 @@ export default defineComponent({
         <>
           <div class="editor-container__content" style={containerStyles.value}>
             {data.value.blocks.map((block, index) => (
-              <EditorBlock class={'editor-block-preview'} block={block} />
+              <EditorBlock
+                class={'editor-block-preview'}
+                block={block}
+                formData={props.formData}
+              />
             ))}
           </div>
           <div>

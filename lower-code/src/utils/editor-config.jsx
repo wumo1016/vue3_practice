@@ -1,4 +1,5 @@
 import { ElButton, ElInput } from 'element-plus'
+import Range from '../components/range'
 
 function createEditorConfig() {
   const componentList = []
@@ -134,5 +135,29 @@ registerConfig.register({
   },
   model: {
     default: '绑定字段'
+  }
+})
+
+registerConfig.register({
+  key: 'range',
+  label: '范围选择器',
+  preview() {
+    return <Range placeholder="预览输入框"></Range>
+  },
+  render({ model }) {
+    return (
+      <Range
+        {...{
+          start: model.start.modelValue,
+          'onUpdate:start': model.start['onUpdate:modelValue'],
+          end: model.end.modelValue,
+          'onUpdate:end': model.end['onUpdate:modelValue']
+        }}
+      ></Range>
+    )
+  },
+  model: {
+    start: '开始字段',
+    end: '结束字段'
   }
 })

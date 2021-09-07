@@ -19,7 +19,9 @@ export default defineComponent({
 
     const formData = ref({
       username: 'wyb',
-      password: 123456
+      password: 123456,
+      start: 0,
+      end: 100
     })
 
     return {
