@@ -9,6 +9,7 @@ import {
   ElOption
 } from 'element-plus'
 import deepcopy from '_deepcopy@2.1.0@deepcopy'
+import TableEditor from '../packages/editor-table'
 
 export default defineComponent({
   props: {
@@ -70,7 +71,8 @@ export default defineComponent({
                           ></el-option>
                         ))}
                       </el-select>
-                    )
+                    ),
+                    table: () => <TableEditor v-model={state.editData.props[key]} config={config} />
                   }[config.type]()}
                 </el-form-item>
               )

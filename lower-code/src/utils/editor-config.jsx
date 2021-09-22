@@ -1,4 +1,4 @@
-import { ElButton, ElInput } from 'element-plus'
+import { ElButton, ElInput, ElSelect } from 'element-plus'
 import Range from '../components/range'
 
 function createEditorConfig() {
@@ -31,6 +31,34 @@ const createSelectProp = (label, options) => ({
   type: 'select',
   label,
   options
+})
+
+const createTableProp = (label, table) => ({
+  type: 'table',
+  label,
+  table
+})
+
+registerConfig.register({
+  ket: 'select',
+  label: '下拉框',
+  preview: () => <ElSelect modelValue=""> </ElSelect>,
+  render: ({ props }) => <ElSelect modelValue=""> </ElSelect>,
+  props: {
+    options: createTableProp('下拉选项', {
+      options: [
+        {
+          label: '显示值',
+          field: 'label'
+        },
+        {
+          label: '绑定值',
+          field: 'value'
+        }
+      ],
+      key: 'label' // 显示给用户的值
+    })
+  }
 })
 
 registerConfig.register({
