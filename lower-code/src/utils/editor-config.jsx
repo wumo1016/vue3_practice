@@ -112,12 +112,22 @@ registerConfig.register({
 registerConfig.register({
   key: 'button',
   label: '按钮',
+  resize: {
+    width: true, // 可以改变横向大小
+    height: true
+  },
   preview() {
     return <ElButton>预览按钮</ElButton>
   },
-  render({ props }) {
+  render({ props, size }) {
     return (
-      <ElButton type={props.type} type={props.size}>
+      <ElButton
+        type={props.type}
+        style={{
+          width: size.width + 'px',
+          height: size.height + 'px'
+        }}
+      >
         {props.text || '渲染按钮'}
       </ElButton>
     )
@@ -170,11 +180,20 @@ registerConfig.register({
 registerConfig.register({
   key: 'input',
   label: '输入框',
+  resize: {
+    width: true // 可以改变横向大小
+  },
   preview() {
     return <ElInput placeholder="预览输入框"></ElInput>
   },
-  render({ model }) {
-    return <ElInput placeholder="渲染输入框" {...model.default}></ElInput>
+  render({ model, size }) {
+    return (
+      <ElInput
+        style={{ width: size.width + 'px' }}
+        placeholder="渲染输入框"
+        {...model.default}
+      ></ElInput>
+    )
   },
   model: {
     default: '绑定字段'
