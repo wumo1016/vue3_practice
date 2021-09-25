@@ -1,0 +1,40 @@
+{
+  "container": {
+    "width": 550,
+    "height": 550
+  },
+  "blocks": [
+    {
+      "top": 100,
+      "left": 100,
+      "zIndex": 1,
+      "key": "text",
+      "props": {
+        "text": "wyb",
+        "color": "#ff0000",
+        "size": "14px"
+      },
+      "model": {}
+    },
+    {
+      "top": 200,
+      "left": 200,
+      "zIndex": 1,
+      "key": "button",
+      "props": {
+        "text": "我的按钮",
+        "type": "primary",
+        "size": "mini"
+      },
+      "model": {}
+    },
+    {
+      "top": 300,
+      "left": 300,
+      "zIndex": 1,
+      "key": "input",
+      "props": {},
+      "model": {}
+    }
+  ]
+}

@@ -16,7 +16,7 @@ export default defineComponent({
   setup(props, ctx) {
     const data = computed({
       get() {
-        return props.modelValue
+        return props.modelValue || []
       },
       set(newValue) {
         ctx.emit('update:modelValue', deepcopy(newValue))
@@ -27,7 +27,8 @@ export default defineComponent({
         title: '下拉选项',
         config: props.config,
         data: data.value,
-        onConfirm(value) {
+        footer: true,
+        confirm(value) {
           data.value = value
         }
       })
@@ -35,9 +36,16 @@ export default defineComponent({
     return () => {
       return (
         <div>
-          {(!data.value || data.value.length == 0) && (
-            <ElButton onClick={add}>添加</ElButton>
-          )}
+          <div>
+            {(!data.value || data.value.length == 0) && (
+              <ElButton onClick={add}>添加</ElButton>
+            )}
+          </div>
+          <div>
+            {(data.value || []).map(item => (
+              <ElTag onClick={add}>{item[props.config.table.key]}</ElTag>
+            ))}
+          </div>
         </div>
       )
     }

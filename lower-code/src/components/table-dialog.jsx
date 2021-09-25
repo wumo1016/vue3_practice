@@ -1,5 +1,11 @@
 import { createVNode, defineComponent, reactive, render } from 'vue'
-import { ElDialog, ElButton, ElTable, ElTableColumn } from 'element-plus'
+import {
+  ElDialog,
+  ElButton,
+  ElTable,
+  ElTableColumn,
+  ElInput
+} from 'element-plus'
 import deepcopy from '_deepcopy@2.1.0@deepcopy'
 
 const TableDialog = defineComponent({
@@ -19,7 +25,7 @@ const TableDialog = defineComponent({
 
     const confirm = () => {
       hideDialog()
-      state.options.confirm && state.options.confirm(state.options.content)
+      state.options.confirm && state.options.confirm(state.tableData)
     }
 
     ctx.expose({
@@ -31,7 +37,7 @@ const TableDialog = defineComponent({
     })
 
     const addData = () => {
-      
+      state.tableData.push({})
     }
 
     return () => {
@@ -45,8 +51,21 @@ const TableDialog = defineComponent({
                   <ElButton>重置</ElButton>
                 </div>
                 <ElTable data={state.tableData}>
-                  <ElTableColumn type="index"></ElTableColumn>
-                  <ElTableColumn label="" prop=""></ElTableColumn>
+                  <ElTableColumn type="index" label="序号"></ElTableColumn>
+                  {state.options.config.table.options.map((item, index) => {
+                    return (
+                      <ElTableColumn label={item.label}>
+                        {{
+                          default: ({ row }) => (
+                            <ElInput v-model={row[item.field]}></ElInput>
+                          )
+                        }}
+                      </ElTableColumn>
+                    )
+                  })}
+                  <ElTableColumn label="操作">
+                    <ElButton type="danger">删除</ElButton>
+                  </ElTableColumn>
                 </ElTable>
               </div>
             ),
