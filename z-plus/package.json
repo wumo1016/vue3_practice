@@ -12,5 +12,10 @@
   "devDependencies": {
     "typescript": "^4.4.4",
     "vue": "^3.2.20"
+  },
+  "dependencies": {
+    "@z-plus/components": "workspace:^1.0.0",
+    "@z-plus/theme-chalk": "workspace:^1.0.0",
+    "@z-plus/utils": "workspace:^1.0.0"
   }
 }

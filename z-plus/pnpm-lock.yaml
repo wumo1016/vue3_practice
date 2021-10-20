@@ -4,8 +4,15 @@ importers:
 
   .:
     specifiers:
+      '@z-plus/components': workspace:^1.0.0
+      '@z-plus/theme-chalk': workspace:^1.0.0
+      '@z-plus/utils': workspace:^1.0.0
       typescript: ^4.4.4
       vue: ^3.2.20
+    dependencies:
+      '@z-plus/components': link:packages/components
+      '@z-plus/theme-chalk': link:packages/theme-chalk
+      '@z-plus/utils': link:packages/utils
     devDependencies:
       typescript: 4.4.4
       vue: 3.2.20
