@@ -5,11 +5,12 @@ import dartSass from 'sass'
 import autoprefixer from 'gulp-autoprefixer'
 import cleanCss from 'gulp-clean-css'
 import path from 'path'
+const resolve = paths => path.resolve(__dirname, paths)
 
 // 打包样式
 function compile() {
   const sass = gulpSass(dartSass)
-  return src(path.resolve(__dirname, './src/*.scss'))
+  return src(resolve('./src/*.scss'))
     .pipe(sass.sync())
     .pipe(autoprefixer())
     .pipe(cleanCss()) // 压缩文件
@@ -17,14 +18,14 @@ function compile() {
 }
 // 复制字体文件
 function copyFont() {
-  return src(path.resolve(__dirname, './src/fonts/**'))
+  return src(resolve('./src/fonts/**'))
     .pipe(cleanCss())
     .pipe(dest('./dist/fonts'))
 }
 // 将所有样式文件复制到根目录中去
 function copyStyle() {
-  return src(path.resolve(__dirname, './dist/**')).pipe(
-    dest(path.resolve(__dirname, '../../dist/theme-chalk/style'))
+  return src(resolve('./dist/**')).pipe(
+    dest(resolve('../../dist/theme-chalk/style'))
   )
 }
 

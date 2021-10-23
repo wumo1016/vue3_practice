@@ -16,6 +16,7 @@ importers:
       gulp-autoprefixer: ^8.0.0
       gulp-clean-css: ^4.3.0
       gulp-sass: ^5.0.0
+      gulp-typescript: ^6.0.0-alpha.1
       sass: ^1.43.2
       sucrase: ^3.20.3
       typescript: ^4.4.4
@@ -34,6 +35,7 @@ importers:
       gulp-autoprefixer: 8.0.0_gulp@4.0.2
       gulp-clean-css: 4.3.0
       gulp-sass: 5.0.0
+      gulp-typescript: 6.0.0-alpha.1_typescript@4.4.4
       sass: 1.43.2
       sucrase: 3.20.3
       typescript: 4.4.4
@@ -252,6 +254,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       ansi-wrap: 0.1.0
+    dev: true
+
+  /ansi-colors/4.1.1:
+    resolution: {integrity: sha512-JoX0apGbHaUJBNl6yF+p6JAFYZ666/hhCGKN5t9QFjbJQKUU/g8MNbFDbvfrgKXvI1QpZplPOnwIo99lX/AAmA==}
+    engines: {node: '>=6'}
     dev: true
 
   /ansi-gray/0.1.1:
@@ -1423,6 +1430,21 @@ packages:
       vinyl-sourcemaps-apply: 0.2.1
     dev: true
 
+  /gulp-typescript/6.0.0-alpha.1_typescript@4.4.4:
+    resolution: {integrity: sha512-KoT0TTfjfT7w3JItHkgFH1T/zK4oXWC+a8xxKfniRfVcA0Fa1bKrIhztYelYmb+95RB80OLMBreknYkdwzdi2Q==}
+    engines: {node: '>= 8'}
+    peerDependencies:
+      typescript: '~2.7.1 || >=2.8.0-dev || >=2.9.0-dev || ~3.0.0 || >=3.0.0-dev || >=3.1.0-dev || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.7.0-dev '
+    dependencies:
+      ansi-colors: 4.1.1
+      plugin-error: 1.0.1
+      source-map: 0.7.3
+      through2: 3.0.1
+      typescript: 4.4.4
+      vinyl: 2.2.1
+      vinyl-fs: 3.0.3
+    dev: true
+
   /gulp/4.0.2:
     resolution: {integrity: sha512-dvEs27SCZt2ibF29xYgmnwwCYZxdxhQ/+LFWlbAW8y7jt68L/65402Lz3+CKy0Ov4rOs+NERmDq7YlZaDqUIfA==}
     engines: {node: '>= 0.10'}
@@ -2508,6 +2530,11 @@ packages:
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /source-map/0.7.3:
+    resolution: {integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==}
+    engines: {node: '>= 8'}
     dev: true
 
   /sourcemap-codec/1.4.8:
