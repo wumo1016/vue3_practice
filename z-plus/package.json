@@ -18,6 +18,7 @@
     "@types/gulp-clean-css": "^4.3.0",
     "@types/gulp-sass": "^5.0.0",
     "@types/sass": "^1.16.1",
+    "fast-glob": "^3.2.7",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",

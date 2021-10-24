@@ -17,3 +17,10 @@ export const run = async (command: string) =>
     })
     app.on('close', r)
   })
+
+export const pathRewriter = format => {
+  return (id: string) => {
+    id = String(id).replace('@z-plus', `z-plus/${format}`)
+    return id
+  }
+}
