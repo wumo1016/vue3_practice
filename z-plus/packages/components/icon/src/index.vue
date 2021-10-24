@@ -5,7 +5,7 @@
 </template>
 <script>
 import { computed, defineComponent } from 'vue'
-import { iconProps } from './index'
+import { iconProps } from './index.ts'
 
 export default defineComponent({
   name: 'ZIcon', 
