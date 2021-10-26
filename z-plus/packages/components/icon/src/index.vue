@@ -3,9 +3,9 @@
     <slot />
   </i>
 </template>
-<script>
+<script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { iconProps } from './index.ts'
+import { iconProps } from './index'
 
 export default defineComponent({
   name: 'ZIcon', 
