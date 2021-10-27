@@ -12,9 +12,9 @@ export default series(
     withTaskName(
       'buildFullComponent',
       () => run('pnpm run build buildFullComponent') // 直接执行任务 buildFullComponent 执行命令时会调用rollup 我们给rollup传递参数buildFullComponent(这是一个任务名) 它就会执行
-    )
-  ),
-  withTaskName('buildComponent', () => run('pnpm run build buildComponent'))
+    ),
+    withTaskName('buildComponent', () => run('pnpm run build buildComponent'))
+  )
 )
 
 export * from './full-component'
