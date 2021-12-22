@@ -10,3 +10,6 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+import globalProperties from './utils/globalProperties'
+app.config.globalProperties.globalObj = globalProperties
