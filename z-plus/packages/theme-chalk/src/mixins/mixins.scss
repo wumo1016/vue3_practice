@@ -1,0 +1,2 @@
+@use './config.scss' as *; // 导入config
+@forward './config.scss'; // 暴露成全局变量
