@@ -1,8 +1,8 @@
-interface IGlobalPropertie {
+export interface IGlobalProperty {
   name: string
 }
 
-const globalProperties: IGlobalPropertie = {
+const globalProperties: IGlobalProperty = {
   name: 'wyb'
 }
 
