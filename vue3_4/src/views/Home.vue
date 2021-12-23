@@ -1,7 +1,6 @@
 <template>
   <div>
-    <Child class="test" />
-    <button @click="change">测试</button>
+    <input type="text" @input="change($event)" />
   </div>
 </template>
 
@@ -9,8 +8,9 @@
 import { computed, reactive, ref } from 'vue'
 import Child from './child.vue'
 
-
-const change = () => { }
+const change = (e: Event) => {
+  console.log((e.target as HTMLInputElement).value);
+}
 
 </script>
 
