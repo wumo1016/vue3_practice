@@ -69,3 +69,15 @@ const change = () => {
 const name = ref('wyb')
 const obj = { name: ref('wyb') }
 ```
+
+## 类与样式绑定
+- 给子组件绑定类时 如果子组件存在多个根节点 需要在指定根节点上接收这个类
+> 子组件
+```html
+<div :class="[$attrs.class, 'test1']">第一行</div>
+<div>第二行</div>
+```
+> 父组件
+```html
+<Child class="test" />
+```
