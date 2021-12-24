@@ -4,8 +4,4 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-
-const change = () => { }
-
 </script>
