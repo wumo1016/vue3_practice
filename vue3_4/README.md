@@ -123,7 +123,7 @@ onMounted(() => {
   console.log(input.value)
 })
 </script>
-// 动态ref
+// 动态ref 首席渲染和组件更新的时候都会调用
 <template>
   <input type="text" :ref="inputRef" />
 </template>
