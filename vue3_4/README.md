@@ -199,7 +199,7 @@ const test = params => {
   console.log(params)
 }
 </script>
-// child.vue
+// child.vue (可以不声明defineEmits 在模板中可以直接使用$emit派发事件)
 <template>
   <div @click="emit('test', 'wyb')">第一行</div>
 </template>
@@ -218,7 +218,6 @@ export default {
 }
 </script>
 <script setup>
-// ...setup 部分逻辑
 </script>
 ```
 - 多个根节点组件 可以用 `v-bind="$attrs"` 显示的给某一个组件绑定
