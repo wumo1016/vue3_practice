@@ -159,3 +159,24 @@ const props = defineProps(['name'])
 console.log(props.name)
 </script>
 ```
+
+## 事件交互
+```html
+// parent.vue
+<template>
+  <Child @test="test" />
+</template>
+<script setup lang="ts">
+import Child from './child.vue'
+const test = params => {
+  console.log(params)
+}
+</script>
+// child.vue
+<template>
+  <div @click="emit('test', 'wyb')">第一行</div>
+</template>
+<script setup lang="ts">
+const emit = defineEmits(['test']) // emit必须定义
+</script>
+```
