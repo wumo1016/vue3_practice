@@ -18,7 +18,7 @@ Set JSON Intl BigInt
 - 如果想自定义 可以在`app.config.globalProperties`上显式的添加
 
 ## 动态指令
-```javascript
+```html
 <a v-bind:[attributeName]="url"> ... </a>
 <!-- 缩写 -->
 <a :[attributeName]="url"> ... </a>
@@ -26,7 +26,7 @@ Set JSON Intl BigInt
 - 指令名必须为字符串
 
 ## 动态事件
-```javascript
+```html
 <a v-on:[eventName]="doSomething"> ... </a>
 <!-- 缩写 -->
 <a @[eventName]="doSomething">
@@ -112,7 +112,7 @@ watch(source, callback, {
 ```
 
 ## 模板ref
-```javascript
+```html
 // 普通ref
 <template>
   <input type="text" ref="input" />
@@ -135,5 +135,27 @@ const inputRef = el => {
 // 组件ref 拿到的值就是组件实例
 // 如果子组件是options api 或 没有使用 script+setup 则拿到的就是this
 // 如果使用了 script+setup 则只会拿到子组件中使用 defineExpose 暴露的变量
+</script>
+```
+
+## props
+> 基本使用 使用defineProps接收props 可以直接在模板中使用
+```html
+// parent.vue
+<template>
+  <input type="text" v-model="name" />
+  <Child :name="name" />
+</template>
+<script setup lang="ts">
+import Child from './child.vue'
+const name = ref('wyb')
+</script>
+// child.vue
+<template>
+  <div>第一行{{ name }}</div>
+</template>
+<script setup lang="ts">
+const props = defineProps(['name'])
+console.log(props.name)
 </script>
 ```

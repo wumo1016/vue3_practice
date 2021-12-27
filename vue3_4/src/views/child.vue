@@ -1,7 +1,8 @@
 <template>
-  <div :class="[$attrs.class, 'test1']">第一行</div>
-  <div>第二行</div>
+  <div>第一行{{ name }}</div>
 </template>
 
 <script setup lang="ts">
+const props = defineProps(['name'])
+console.log(props.name)
 </script>
