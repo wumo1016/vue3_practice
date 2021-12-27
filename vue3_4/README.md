@@ -222,3 +222,23 @@ export default {
 ```
 - 多个根节点组件 可以用 `v-bind="$attrs"` 显示的给某一个组件绑定
 - 在本组件访问未显式声明的属性 可以使用 `const attrs = useAttrs()`
+
+## v-model
+- 组件v-model
+```html
+// parent.vue
+<CustomInput v-model="searchText" />
+// child.vue
+<script setup>
+defineProps(['modelValue'])
+defineEmits(['update:modelValue'])
+const value = computed({
+  get() {
+    return props.modelValue
+  },
+  set(value) {
+    emit('update:modelValue', value)
+  }
+})
+</script>
+```
