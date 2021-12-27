@@ -110,3 +110,30 @@ watch(source, callback, {
   flush: 'post'
 })
 ```
+
+## 模板ref
+```javascript
+// 普通ref
+<template>
+  <input type="text" ref="input" />
+</template>
+<script setup lang="ts">
+const input = ref(null)
+onMounted(() => {
+  console.log(input.value)
+})
+</script>
+// 动态ref
+<template>
+  <input type="text" :ref="inputRef" />
+</template>
+<script setup lang="ts">
+const inputRef = el => {
+  console.log(el)
+}
+
+// 组件ref 拿到的值就是组件实例
+// 如果子组件是options api 或 没有使用 script+setup 则拿到的就是this
+// 如果使用了 script+setup 则只会拿到子组件中使用 defineExpose 暴露的变量
+</script>
+```
