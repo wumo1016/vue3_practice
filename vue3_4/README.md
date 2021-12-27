@@ -81,3 +81,32 @@ const obj = { name: ref('wyb') }
 ```html
 <Child class="test" />
 ```
+
+## watch && watchEffect
+```javascript
+// ref
+watch(x, val => {
+  console.log(val)
+})
+// 函数
+watch(() => x.value, val => {
+  console.log(val)
+})
+// 数组
+watch([x, () => y.value], ([val1, val2]) => {
+  console.log(val1, val2)
+})
+// watchEffect会自动监听函数内所有响应式数据(取值操作)
+const x = ref(0)
+const y = ref(0)
+watchEffect(() => {
+  const res = x.value + y.value
+  console.log(res)
+})
+// watch默认是在组件更新之前被调用 如果想在watch中拿到更新后的dom
+// watchEffect同理
+// 也可以直接使用 watchPostEffect
+watch(source, callback, {
+  flush: 'post'
+})
+```

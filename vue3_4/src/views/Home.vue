@@ -1,17 +1,19 @@
 <template>
   <div>
-    <input type="text" @input="change($event)" />
+    <div>x: <input type="text" v-model="x" /></div>
+    <div>y: <input type="text" v-model="y" /></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import Child from './child.vue'
+import { computed, reactive, ref, watch, watchEffect } from 'vue'
 
-const change = (e: Event) => {
-  console.log((e.target as HTMLInputElement).value);
-}
-
+const x = ref(0)
+const y = ref(0)
+watchEffect(() => {
+  const res = x.value + y.value
+  console.log(res)
+})
 </script>
 
 
