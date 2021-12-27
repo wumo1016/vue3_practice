@@ -118,6 +118,7 @@ watch(source, callback, {
   <input type="text" ref="input" />
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
 const input = ref(null)
 onMounted(() => {
   console.log(input.value)
@@ -147,6 +148,7 @@ const inputRef = el => {
   <Child :name="name" />
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
 import Child from './child.vue'
 const name = ref('wyb')
 </script>
@@ -155,8 +157,33 @@ const name = ref('wyb')
   <div>第一行{{ name }}</div>
 </template>
 <script setup lang="ts">
-const props = defineProps(['name'])
+const props = defineProps({ name: String }) 
+// 使用数组 defineProps(['name'])
+// 结合ts defineProps<{ name?: string }>()
 console.log(props.name)
+</script>
+```
+> 绑定多个prop
+```html
+// parent.vue
+<template>
+  <Child v-bind="obj" />
+</template>
+<script setup lang="ts">
+import { reactive } from '@vue/reactivity'
+import Child from './child.vue'
+const obj = reactive({
+  name: 'wyb',
+  age: 18
+})
+</script>
+// child.vue
+<template>
+  <div>第一行{{ name }}</div>
+  <div>第一行{{ age }}</div>
+</template>
+<script setup lang="ts">
+defineProps<{ name?: string; age: number }>()
 </script>
 ```
 
@@ -177,6 +204,6 @@ const test = params => {
   <div @click="emit('test', 'wyb')">第一行</div>
 </template>
 <script setup lang="ts">
-const emit = defineEmits(['test']) // emit必须定义
+const emit = defineEmits(['test']) // 必须定义
 </script>
 ```

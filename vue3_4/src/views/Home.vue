@@ -1,15 +1,11 @@
 <template>
-  <input type="text" v-model="name" />
-  <Child @test="test" />
+  <Child v-bind="name" />
 </template>
-
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
+import { reactive } from '@vue/reactivity'
 import Child from './child.vue'
-
-const test = params => {
-  console.log(params)
-}
+const name = reactive({
+  name: 'wyb',
+  age: 18
+})
 </script>
-
-

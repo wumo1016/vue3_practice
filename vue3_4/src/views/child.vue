@@ -1,7 +1,7 @@
 <template>
-  <div @click="emit('test', 'wyb')">第一行</div>
+  <div>第一行{{ name }}</div>
+  <div>第一行{{ age }}</div>
 </template>
-
 <script setup lang="ts">
-const emit = defineEmits(['test'])
+defineProps<{ name?: string; age: number }>()
 </script>
