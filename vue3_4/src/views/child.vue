@@ -1,7 +1,10 @@
 <template>
-  <div>第一行{{ name }}</div>
-  <div>第一行{{ age }}</div>
+  <!-- <div>第一行{{ name }}</div> -->
+  <Child1 />
 </template>
 <script setup lang="ts">
-defineProps<{ name?: string; age: number }>()
+import { useAttrs } from '@vue/runtime-core'
+import Child1 from './Child1.vue'
+defineProps<{ name?: string }>()
+
 </script>

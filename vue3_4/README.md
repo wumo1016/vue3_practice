@@ -140,7 +140,7 @@ const inputRef = el => {
 ```
 
 ## props
-> 基本使用 使用defineProps接收props 可以直接在模板中使用
+- 基本使用 使用defineProps接收props 可以直接在模板中使用
 ```html
 // parent.vue
 <template>
@@ -163,7 +163,7 @@ const props = defineProps({ name: String })
 console.log(props.name)
 </script>
 ```
-> 绑定多个prop
+- 绑定多个prop
 ```html
 // parent.vue
 <template>
@@ -207,3 +207,19 @@ const test = params => {
 const emit = defineEmits(['test']) // 必须定义
 </script>
 ```
+
+## Attribute 继承
+- 子组件作为本组件的唯一根节点时 本组件没有声明过的属性才会被子组件继承
+- 禁用 Attribute 需要在组件选项中设置 `inheritAttrs: false` 如果还想使用 script+setup语法 就单独定义一个script用于设置
+```html
+<script>
+export default {
+  inheritAttrs: false
+}
+</script>
+<script setup>
+// ...setup 部分逻辑
+</script>
+```
+- 多个根节点组件 可以用 `v-bind="$attrs"` 显示的给某一个组件绑定
+- 在本组件访问未显式声明的属性 可以使用 `const attrs = useAttrs()`
