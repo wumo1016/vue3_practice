@@ -1,9 +1,6 @@
 <template>
-  <Child @test="test" />
+  <Child />
 </template>
 <script setup lang="ts">
 import Child from './child.vue'
-const test = params => {
-  console.log(params)
-}
 </script>

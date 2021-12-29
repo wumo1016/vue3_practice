@@ -242,3 +242,4 @@ const value = computed({
 })
 </script>
 ```
+- [v-model修饰符](https://vue-new-docs-cn.netlify.app/guide/components/events.html#handling-v-model-modifiers)
