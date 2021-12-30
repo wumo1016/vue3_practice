@@ -243,3 +243,7 @@ const value = computed({
 </script>
 ```
 - [v-model修饰符](https://vue-new-docs-cn.netlify.app/guide/components/events.html#handling-v-model-modifiers)
+
+## 依赖注入
+- 应用级供给 `app.provide(/* 注入名 */ 'message', /* 值 */ 'hello!')`
+- 注入默认值 `const value = inject('message', '这是默认值')`
