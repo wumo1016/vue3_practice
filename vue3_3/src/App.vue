@@ -127,18 +127,19 @@ export default {
               const text = group.addShape('text', {
                 attrs: {
                   name: 'text',
-                  x: 10,
+                  x: 125,
                   y: h,
                   text: (item.Code ? `${item.Code}: ` : '') + item.Name,
                   fontSize: 14,
-                  textAlign: 'left',
+                  textAlign: 'center',
                   textBaseline: 'top',
                   fill: style.color,
                   cursor: 'pointer'
                 }
               })
-              const { height } = text.getBBox()
+              const { width, height } = text.getBBox()
               h = h + height + 5
+              item.width = width
             })
             return rect
           }
