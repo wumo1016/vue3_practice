@@ -18,7 +18,7 @@ Set JSON Intl BigInt
 - 如果想自定义 可以在`app.config.globalProperties`上显式的添加
 
 ## 动态指令
-```javascript
+```html
 <a v-bind:[attributeName]="url"> ... </a>
 <!-- 缩写 -->
 <a :[attributeName]="url"> ... </a>
@@ -26,7 +26,7 @@ Set JSON Intl BigInt
 - 指令名必须为字符串
 
 ## 动态事件
-```javascript
+```html
 <a v-on:[eventName]="doSomething"> ... </a>
 <!-- 缩写 -->
 <a @[eventName]="doSomething">
@@ -81,3 +81,169 @@ const obj = { name: ref('wyb') }
 ```html
 <Child class="test" />
 ```
+
+## watch && watchEffect
+```javascript
+// ref
+watch(x, val => {
+  console.log(val)
+})
+// 函数
+watch(() => x.value, val => {
+  console.log(val)
+})
+// 数组
+watch([x, () => y.value], ([val1, val2]) => {
+  console.log(val1, val2)
+})
+// watchEffect会自动监听函数内所有响应式数据(取值操作)
+const x = ref(0)
+const y = ref(0)
+watchEffect(() => {
+  const res = x.value + y.value
+  console.log(res)
+})
+// watch默认是在组件更新之前被调用 如果想在watch中拿到更新后的dom
+// watchEffect同理
+// 也可以直接使用 watchPostEffect
+watch(source, callback, {
+  flush: 'post'
+})
+```
+
+## 模板ref
+```html
+// 普通ref
+<template>
+  <input type="text" ref="input" />
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+const input = ref(null)
+onMounted(() => {
+  console.log(input.value)
+})
+</script>
+// 动态ref 首席渲染和组件更新的时候都会调用
+<template>
+  <input type="text" :ref="inputRef" />
+</template>
+<script setup lang="ts">
+const inputRef = el => {
+  console.log(el)
+}
+
+// 组件ref 拿到的值就是组件实例
+// 如果子组件是options api 或 没有使用 script+setup 则拿到的就是this
+// 如果使用了 script+setup 则只会拿到子组件中使用 defineExpose 暴露的变量
+</script>
+```
+
+## props
+- 基本使用 使用defineProps接收props 可以直接在模板中使用
+```html
+// parent.vue
+<template>
+  <input type="text" v-model="name" />
+  <Child :name="name" />
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+import Child from './child.vue'
+const name = ref('wyb')
+</script>
+// child.vue
+<template>
+  <div>第一行{{ name }}</div>
+</template>
+<script setup lang="ts">
+const props = defineProps({ name: String }) 
+// 使用数组 defineProps(['name'])
+// 结合ts defineProps<{ name?: string }>()
+console.log(props.name)
+</script>
+```
+- 绑定多个prop
+```html
+// parent.vue
+<template>
+  <Child v-bind="obj" />
+</template>
+<script setup lang="ts">
+import { reactive } from '@vue/reactivity'
+import Child from './child.vue'
+const obj = reactive({
+  name: 'wyb',
+  age: 18
+})
+</script>
+// child.vue
+<template>
+  <div>第一行{{ name }}</div>
+  <div>第一行{{ age }}</div>
+</template>
+<script setup lang="ts">
+defineProps<{ name?: string; age: number }>()
+</script>
+```
+
+## 事件交互
+```html
+// parent.vue
+<template>
+  <Child @test="test" />
+</template>
+<script setup lang="ts">
+import Child from './child.vue'
+const test = params => {
+  console.log(params)
+}
+</script>
+// child.vue (可以不声明defineEmits 在模板中可以直接使用$emit派发事件)
+<template>
+  <div @click="emit('test', 'wyb')">第一行</div>
+</template>
+<script setup lang="ts">
+const emit = defineEmits(['test']) // 必须定义
+</script>
+```
+
+## Attribute 继承
+- 子组件作为本组件的唯一根节点时 本组件没有声明过的属性才会被子组件继承
+- 禁用 Attribute 需要在组件选项中设置 `inheritAttrs: false` 如果还想使用 script+setup语法 就单独定义一个script用于设置
+```html
+<script>
+export default {
+  inheritAttrs: false
+}
+</script>
+<script setup>
+</script>
+```
+- 多个根节点组件 可以用 `v-bind="$attrs"` 显示的给某一个组件绑定
+- 在本组件访问未显式声明的属性 可以使用 `const attrs = useAttrs()`
+
+## v-model
+- 组件v-model
+```html
+// parent.vue
+<CustomInput v-model="searchText" />
+// child.vue
+<script setup>
+defineProps(['modelValue'])
+defineEmits(['update:modelValue'])
+const value = computed({
+  get() {
+    return props.modelValue
+  },
+  set(value) {
+    emit('update:modelValue', value)
+  }
+})
+</script>
+```
+- [v-model修饰符](https://vue-new-docs-cn.netlify.app/guide/components/events.html#handling-v-model-modifiers)
+
+## 依赖注入
+- 应用级供给 `app.provide(/* 注入名 */ 'message', /* 值 */ 'hello!')`
+- 注入默认值 `const value = inject('message', '这是默认值')`
