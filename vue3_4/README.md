@@ -247,3 +247,22 @@ const value = computed({
 ## 依赖注入
 - 应用级供给 `app.provide(/* 注入名 */ 'message', /* 值 */ 'hello!')`
 - 注入默认值 `const value = inject('message', '这是默认值')`
+
+## 自定义指令
+- 组件级指令 在`script+setup`语法中直接定义以v开头的变量即可
+```html
+<template>
+  <input v-focus />
+</template>
+<script setup>
+const vFocus = {
+  mounted: (el) => el.focus()
+}
+</script>
+```
+- 全局指令
+```javascript
+const app = createApp({})
+  app.directive('focus', {
+})
+```
