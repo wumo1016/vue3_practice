@@ -263,8 +263,7 @@ const vFocus = {
 - 全局指令
 ```javascript
 const app = createApp({})
-  app.directive('focus', {
-})
+app.directive('focus', {})
 ```
 
 ## style支持v-bind
