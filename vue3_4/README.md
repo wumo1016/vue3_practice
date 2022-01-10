@@ -266,3 +266,16 @@ const app = createApp({})
   app.directive('focus', {
 })
 ```
+
+## style支持v-bind
+```html
+<script setup>
+import { ref } from 'vue'
+const color = ref('red')
+</script>
+<style scoped>
+div {
+  color: v-bind(color);
+}
+</style>
+```
