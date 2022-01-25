@@ -9,7 +9,9 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@antv/g6": "^4.5.3",
     "pinia": "^2.0.6",
+    "sass": "^1.49.0",
     "vue": "^3.2.26",
     "vue-router": "^4.0.12"
   },

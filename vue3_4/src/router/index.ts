@@ -8,6 +8,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/fmea',
+      name: 'Fmea',
+      component: () => import('@/views/fmea-tree/index.vue')
     }
   ]
 })
