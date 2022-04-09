@@ -1,15 +1,23 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+
+const constantRoutes: RouteRecordRaw[] = [
+  {
+    path: '',
+    name: 'Dashboard',
+    component: () => import('@v/dashboard/index.vue')
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import('@v/test/index.vue')
+  }
+]
+
+export const routes: Array<RouteRecordRaw> = [...constantRoutes]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    }
-  ]
+  routes
 })
 
 export default router

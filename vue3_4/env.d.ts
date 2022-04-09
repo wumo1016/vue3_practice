@@ -1,12 +1,7 @@
 /// <reference types="vite/client" />
 
 declare module '*.vue' {
-  import { DefineComponent } from 'vue'
-  // eslint-disable-next-line
-  const component: DefineComponent<{}, {}, any>
+  import { Component } from 'vue'
+  const component: Component
   export default component
-}
-
-declare const globalObj: {
-  [key: string]: any
 }

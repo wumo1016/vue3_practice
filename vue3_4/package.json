@@ -1,24 +1,40 @@
 {
-  "name": "vue-project",
+  "name": "vite2_vue3",
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
+    "start": "npm run dev",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview --port 5050",
-    "typecheck": "vue-tsc --noEmit"
+    "svgo": "svgo -f src/icons/svg",
+    "preview": "vite preview --port 5050"
   },
   "dependencies": {
-    "pinia": "^2.0.6",
-    "vue": "^3.2.26",
+    "@element-plus/icons-vue": "^1.1.1",
+    "axios": "^0.26.0",
+    "element-plus": "^2.0.2",
+    "path-to-regexp": "^6.2.0",
+    "pinia": "^2.0.11",
+    "pinia-plugin-persistedstate": "^1.5.1",
+    "screenfull": "^6.0.1",
+    "vue": "^3.2.29",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@types/node": "^16.11.12",
-    "@vitejs/plugin-vue": "^2.0.0",
-    "@vitejs/plugin-vue-jsx": "^1.3.1",
-    "typescript": "~4.5.3",
-    "vite": "^2.7.1",
-    "vue-tsc": "^0.29.8"
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@types/node": "^16.11.22",
+    "@vitejs/plugin-vue": "^2.1.0",
+    "@vitejs/plugin-vue-jsx": "^1.3.3",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^10.0.0",
+    "@vue/tsconfig": "^0.1.3",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "prettier": "^2.5.1",
+    "sass": "^1.49.8",
+    "svgo": "^2.8.0",
+    "typescript": "~4.5.5",
+    "vite": "^2.7.13",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vue-tsc": "^0.31.1"
   }
 }
