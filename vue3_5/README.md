@@ -1,4 +1,4 @@
-# vite2_vue3
+# vue3_5
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -39,37 +39,8 @@ npm run dev
 npm run build
 ```
 
-## 依赖注入
-- 应用级供给 `app.provide(/* 注入名 */ 'message', /* 值 */ 'hello!')`
-- 注入默认值 `const value = inject('message', '这是默认值')`
+### Lint with [ESLint](https://eslint.org/)
 
-## 自定义指令
-- 组件级指令 在`script+setup`语法中直接定义以v开头的变量即可
-```html
-<template>
-  <input v-focus />
-</template>
-<script setup>
-const vFocus = {
-  mounted: (el) => el.focus()
-}
-</script>
-```
-- 全局指令
-```javascript
-const app = createApp({})
-app.directive('focus', {})
-```
-
-## style支持v-bind
-```html
-<script setup>
-import { ref } from 'vue'
-const color = ref('red')
-</script>
-<style scoped>
-div {
-  color: v-bind(color);
-}
-</style>
+```sh
+npm run lint
 ```
