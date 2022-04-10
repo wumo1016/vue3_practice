@@ -2,7 +2,7 @@
  * @Description:
  * @Author: wyb
  * @LastEditors: wyb
- * @LastEditTime: 2022-04-09 16:59:51
+ * @LastEditTime: 2022-04-10 15:42:30
  */
 
 export const mockData = [
@@ -258,11 +258,26 @@ export const mockData = [
                 Oid: 'e7133e79-5e1b-4cb9-9b55-7928a7c577c7',
                 Name: 'R/C-硬度',
                 Type: null
+              },
+              {
+                Oid: 'e7133e79-5e1b-4cb9-9b55-7928a7c577c71',
+                Name: 'R/C-硬度1',
+                Type: null
               }
             ]
           }
         ]
       }
     ]
+  },
+  {
+    Oid: 'e7133e79-5e122b-4cb9-9b55-7928a7c577c71',
+    Name: 'R/C-硬度11',
+    Type: null
+  },
+  {
+    Oid: 'e7133e79-5e122b1-4cb9-9b55-7928a7c577c71',
+    Name: 'R/C-硬度11',
+    Type: null
   }
 ]

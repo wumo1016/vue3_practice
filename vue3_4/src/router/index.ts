@@ -10,6 +10,11 @@ const constantRoutes: RouteRecordRaw[] = [
     path: '/test',
     name: 'Test',
     component: () => import('@v/test/index.vue')
+  },
+  {
+    path: '/line-tree',
+    name: 'LineTree',
+    component: () => import('@v/line-tree/test.vue')
   }
 ]
 
