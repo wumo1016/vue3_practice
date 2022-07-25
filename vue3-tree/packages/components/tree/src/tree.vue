@@ -1,9 +1,24 @@
-<template>tree1</template>
+<template>
+  <div :class="bem.b()">
+    <ZTreeNode
+      v-for="node in flattenTree"
+      :key="node.key"
+      :node="node"
+      :expanded="isExpanded(node)"
+      @toggle="toggleExpand"
+    >
+    </ZTreeNode>
+  </div>
+</template>
 
 <script setup lang="ts">
 import { computed } from '@vue/reactivity'
+import { createNamespace } from '@zi-shui/utils/create'
 import { ref, watch } from 'vue'
-import { TreeOption, treeProps, TreeNode } from './tree'
+import { TreeOption, treeProps, TreeNode, Key } from './tree'
+import ZTreeNode from './tree-node.vue'
+
+const bem = createNamespace('tree')
 
 defineOptions({
   name: 'z-tree'
@@ -101,6 +116,49 @@ const flattenTree = computed(() => {
   return flattenNodes
 })
 
-console.log(flattenTree.value);
+// console.log(flattenTree.value)
 
+// loading功能
+const loadingKeysRef = ref(new Set<Key>())
+function triggerLoading(node: TreeNode) {
+  if (!node.children.length && !node.isLeaf) {
+    // 没有孩子 并且有不是叶子节点
+    const loadingKeys = loadingKeysRef.value
+    const { onLoad } = props
+    if (!loadingKeys.has(node.key)) {
+      loadingKeys.add(node.key)
+      if (onLoad) {
+        onLoad(node.rawNode).then((children: TreeOption[]) => {
+          node.rawNode.children = children
+          node.children = createTree(children, node)
+          loadingKeys.delete(node.key)
+        })
+      }
+    }
+  }
+}
+// 当前节点是否展开
+function isExpanded(node: TreeNode): boolean {
+  return expandedKeysSet.value.has(node.key)
+}
+// 展开功能
+function expand(node: TreeNode) {
+  const keySet = expandedKeysSet.value
+  keySet.add(node.key)
+  triggerLoading(node)
+}
+// 折叠功能
+function collpase(node: TreeNode) {
+  expandedKeysSet.value.delete(node.key)
+}
+// 切换展开
+function toggleExpand(node: TreeNode) {
+  const expandKeys = expandedKeysSet.value
+  // if (expandKeys.has(node.key) && !loadingKeysRef.value.has(node.key)) {
+  if (expandKeys.has(node.key)) {
+    collpase(node)
+  } else {
+    expand(node)
+  }
+}
 </script>

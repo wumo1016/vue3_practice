@@ -50,7 +50,7 @@ export const treeProps = {
   //   default: true
   // },
   // selectedKeys: Array as PropType<Key[]>,
-  // onLoad: Function as PropType<(node: TreeOption) => Promise<TreeOption[]>>
+  onLoad: Function as PropType<(node: TreeOption) => Promise<TreeOption[]>>
 } as const
 
 export const treeNodeProps = {
