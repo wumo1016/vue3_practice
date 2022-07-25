@@ -15,7 +15,7 @@ export interface TreeNode extends Required<TreeOption> {
   level: number
   rawNode: TreeOption
   children: TreeNode[]
-  isLeaf: boolean
+  isLeaf: boolean // 仅仅 lazy 模式下生效
   disabled: boolean
 }
 

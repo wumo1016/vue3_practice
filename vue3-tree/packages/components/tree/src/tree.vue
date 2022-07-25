@@ -5,6 +5,7 @@
       :key="node.key"
       :node="node"
       :expanded="isExpanded(node)"
+      :loadingKeys="loadingKeysRef"
       @toggle="toggleExpand"
     >
     </ZTreeNode>
@@ -118,18 +119,20 @@ const flattenTree = computed(() => {
 
 // console.log(flattenTree.value)
 
-// loading功能
+// loading功能 当前正在加载的key
 const loadingKeysRef = ref(new Set<Key>())
 function triggerLoading(node: TreeNode) {
+  // 没有孩子 并且有不是叶子节点
   if (!node.children.length && !node.isLeaf) {
-    // 没有孩子 并且有不是叶子节点
     const loadingKeys = loadingKeysRef.value
     const { onLoad } = props
     if (!loadingKeys.has(node.key)) {
       loadingKeys.add(node.key)
       if (onLoad) {
         onLoad(node.rawNode).then((children: TreeOption[]) => {
+          // 修改原来的节点
           node.rawNode.children = children
+          // 更新自定义的节点
           node.children = createTree(children, node)
           loadingKeys.delete(node.key)
         })
@@ -143,8 +146,7 @@ function isExpanded(node: TreeNode): boolean {
 }
 // 展开功能
 function expand(node: TreeNode) {
-  const keySet = expandedKeysSet.value
-  keySet.add(node.key)
+  expandedKeysSet.value.add(node.key)
   triggerLoading(node)
 }
 // 折叠功能
@@ -154,8 +156,8 @@ function collpase(node: TreeNode) {
 // 切换展开
 function toggleExpand(node: TreeNode) {
   const expandKeys = expandedKeysSet.value
-  // if (expandKeys.has(node.key) && !loadingKeysRef.value.has(node.key)) {
-  if (expandKeys.has(node.key)) {
+  // 正在加载中不允许收起
+  if (expandKeys.has(node.key) && !loadingKeysRef.value.has(node.key)) {
     collpase(node)
   } else {
     expand(node)
