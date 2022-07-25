@@ -1,6 +1,7 @@
 <template>tree1</template>
 
 <script setup lang="ts">
+import { computed } from '@vue/reactivity'
 import { ref, watch } from 'vue'
 import { TreeOption, treeProps, TreeNode } from './tree'
 
@@ -9,7 +10,7 @@ defineOptions({
 })
 
 const props = defineProps(treeProps)
-console.log(props)
+// console.log(props)
 
 // 格式化数据
 function createTree(data: TreeOption[], parent: TreeNode | null = null) {
@@ -63,8 +64,43 @@ watch(
   () => props.data,
   (data: TreeOption[]) => {
     tree.value = createTree(data)
-    console.log(tree.value);
+    // console.log(tree.value)
   },
   { immediate: true }
 )
+
+// 需要展开的key 有哪些
+const expandedKeysSet = ref(new Set(props.defaultExpandedKeys))
+
+// 默认显示的拍平的数据
+const flattenTree = computed(() => {
+  const expandedKeys = expandedKeysSet.value // 要展开的keys有哪些
+  // 最终拍平的节点
+  const flattenNodes: TreeNode[] = [] // 这个就是拍平后的结果
+  const nodes = tree.value || [] // 被格式化后的节点
+  const stack: TreeNode[] = [] // 用于遍历树的栈  [40,30,31,32,41]
+  // [40, 41]
+  for (let i = nodes.length - 1; i >= 0; --i) {
+    stack.push(nodes[i])
+  }
+  // [41,50,40,30]
+  // 深度遍历
+  while (stack.length) {
+    const node = stack.pop()
+    if (!node) continue
+    flattenNodes.push(node)
+    if (expandedKeys.has(node.key)) {
+      const children = node.children // [30,31,32];
+      if (children) {
+        for (let i = node.children.length - 1; i >= 0; --i) {
+          stack.push(node.children[i])
+        }
+      }
+    }
+  }
+  return flattenNodes
+})
+
+console.log(flattenTree.value);
+
 </script>

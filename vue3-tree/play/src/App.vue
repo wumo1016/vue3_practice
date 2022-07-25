@@ -36,6 +36,7 @@ const data = ref(createData())
 
   <z-tree
     :data="data"
+    :default-expanded-keys="['40']"
     label-field="label"
     key-field="key"
     children-field="children"

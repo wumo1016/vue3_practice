@@ -37,10 +37,10 @@ export const treeProps = {
     type: String,
     default: 'children'
   },
-  // defaultExpandedKeys: {
-  //   type: Array as PropType<Key[]>,
-  //   default: () => []
-  // },
+  defaultExpandedKeys: {
+    type: Array as PropType<Key[]>,
+    default: () => []
+  },
   // multiple: {
   //   type: Boolean,
   //   default: true
