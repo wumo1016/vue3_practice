@@ -60,4 +60,5 @@ const handleContentClick = (node: TreeNode) => {
   if (node.disabled) return
   emit('select', node)
 }
+
 </script>

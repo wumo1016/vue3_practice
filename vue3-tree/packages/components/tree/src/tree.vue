@@ -6,7 +6,9 @@
       :node="node"
       :expanded="isExpanded(node)"
       :loadingKeys="loadingKeysRef"
+      :selectedKeys="selectKeysRef"
       @toggle="toggleExpand"
+      @select="handleSelect"
     >
     </ZTreeNode>
   </div>
@@ -16,7 +18,7 @@
 import { computed } from '@vue/reactivity'
 import { createNamespace } from '@zi-shui/utils/create'
 import { ref, watch } from 'vue'
-import { TreeOption, treeProps, TreeNode, Key } from './tree'
+import { TreeOption, treeProps, TreeNode, Key, treeEmits } from './tree'
 import ZTreeNode from './tree-node.vue'
 
 const bem = createNamespace('tree')
@@ -162,5 +164,44 @@ function toggleExpand(node: TreeNode) {
   } else {
     expand(node)
   }
+}
+
+// 5) 实现选中节点
+const emit = defineEmits(treeEmits)
+
+const selectKeysRef = ref<Key[]>([])
+
+watch(
+  () => props.selectedKeys,
+  value => {
+    if (value) {
+      selectKeysRef.value = value
+      console.log(selectKeysRef.value)
+    }
+  },
+  {
+    immediate: true
+  }
+)
+
+function handleSelect(node: TreeNode) {
+  let keys = Array.from(selectKeysRef.value)
+  if (!props.selectable) return // 如果不能选择什么都不用做了
+  console.log(props.multiple);
+  if (props.multiple) {
+    const index = keys.findIndex(key => key === node.key)
+    if (index > -1) {
+      keys.splice(index, 1)
+    } else {
+      keys.push(node.key)
+    }
+  } else {
+    if (keys.includes(node.key)) {
+      keys = []
+    } else {
+      keys = [node.key]
+    }
+  }
+  emit('update:selectedKeys', keys)
 }
 </script>

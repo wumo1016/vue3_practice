@@ -41,15 +41,15 @@ export const treeProps = {
     type: Array as PropType<Key[]>,
     default: () => []
   },
-  // multiple: {
-  //   type: Boolean,
-  //   default: true
-  // },
-  // selectable: {
-  //   type: Boolean,
-  //   default: true
-  // },
-  // selectedKeys: Array as PropType<Key[]>,
+  selectable: {
+    type: Boolean,
+    default: true
+  },
+  multiple: {
+    type: Boolean,
+    default: false
+  },
+  selectedKeys: Array as PropType<Key[]>,
   onLoad: Function as PropType<(node: TreeOption) => Promise<TreeOption[]>>
 } as const
 
