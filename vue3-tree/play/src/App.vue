@@ -114,10 +114,12 @@ const selectedKeys = ref<Key[]>(['40'])
     v-model:selected-keys="selectedKeys"
     :data="data"
     :default-expanded-keys="['40']"
+    :default-checked-keys="['40']"
     label-field="label"
     key-field="key"
     children-field="children"
     selectable
+    showCheckbox
   >
     <template #default="{ node }"> {{ node.key }} - {{ node.label }} </template>
   </z-tree>

@@ -19,6 +19,15 @@
           <Loading v-else></Loading>
         </z-icon>
       </span>
+
+      {{ indeterminate }}
+      <z-checkbox
+        v-if="showCheckbox"
+        :disabled="disabled"
+        :model-value="checked"
+        :indeterminate="indeterminate"
+        @change="handleCheckChange"
+      ></z-checkbox>
       <span
         :class="bem.e('label')"
         @click="handleContentClick(node)"
@@ -37,6 +46,7 @@ import Loading from './icon/Loading'
 import { computed } from 'vue'
 import { createNamespace } from '@zi-shui/utils/create'
 import { TreeNode, treeNodeEmitts, treeNodeProps } from './tree'
+import ZCheckbox from '@zi-shui/components/checkbox'
 const bem = createNamespace('tree-node')
 const props = defineProps(treeNodeProps)
 
@@ -61,4 +71,8 @@ const handleContentClick = (node: TreeNode) => {
   emit('select', node)
 }
 
+
+function handleCheckChange(val: boolean) {
+  emit('check', props.node, val)
+}
 </script>
