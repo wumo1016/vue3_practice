@@ -187,7 +187,6 @@ watch(
 function handleSelect(node: TreeNode) {
   let keys = Array.from(selectKeysRef.value)
   if (!props.selectable) return // 如果不能选择什么都不用做了
-  console.log(props.multiple);
   if (props.multiple) {
     const index = keys.findIndex(key => key === node.key)
     if (index > -1) {

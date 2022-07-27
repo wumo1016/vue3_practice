@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AddCircle } from '@vicons/ionicons5'
-import { Key } from '@zi-shui/components/tree/src/tree'
+import { Key, TreeOption } from '@zi-shui/components/tree/src/tree'
 import { ref } from 'vue'
 
 function createData(level = 4, parentKey = ''): any {
@@ -52,7 +52,36 @@ function createLabel(level: number): string {
 //   return ''
 // }
 
-const data = ref(createData())
+// const data = ref(createData())
+// const data = ref(createData())
+
+const data = ref<TreeOption[]>([
+  {
+    key: '0',
+    label: '0',
+    children: [
+      {
+        key: '0-0',
+        label: '0-0'
+      },
+      {
+        disabled: true, // 这个节点被禁用了
+        key: '0-1',
+        label: '0-1',
+        children: [
+          {
+            label: '0-1-0',
+            key: '0-1-0'
+          },
+          {
+            label: '0-1-1',
+            key: '0-1-1'
+          }
+        ]
+      }
+    ]
+  }
+])
 
 // const handleLoad = (node: TreeOption) => {
 //   // 内部肯定需要将展开的节点传递给我
