@@ -23,8 +23,7 @@
         :class="bem.e('label')"
         @click="handleContentClick(node)"
       >
-        {{ node.label }}
-        <!-- <ZTreeNodeContent :node="node"></ZTreeNodeContent> -->
+        <ZTreeNodeContent :node="node"></ZTreeNodeContent>
       </span>
     </div>
   </div>
@@ -33,6 +32,7 @@
 <script lang="ts" setup>
 import ZIcon from '@zi-shui/components/icon'
 import Switcher from './icon/Switcher'
+import ZTreeNodeContent from './tree-node-content'
 import Loading from './icon/Loading'
 import { computed } from 'vue'
 import { createNamespace } from '@zi-shui/utils/create'

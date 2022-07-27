@@ -84,7 +84,7 @@ export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>
 export interface TreeContext {
   slots: SetupContext['slots']
 }
-export const treeInjectionKey: InjectionKey<TreeContext> = Symbol()
+export const treeInjectKey: InjectionKey<TreeContext> = Symbol()
 
 export const treeNodeContentProps = {
   node: {

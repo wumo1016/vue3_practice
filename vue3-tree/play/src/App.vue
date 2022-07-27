@@ -120,5 +120,6 @@ const selectedKeys = ref<Key[]>(['40'])
     children-field="children"
     selectable
   >
+    <template #default="{ node }"> {{ node.key }} - {{ node.label }} </template>
   </z-tree>
 </template>

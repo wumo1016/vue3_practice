@@ -17,8 +17,15 @@
 <script setup lang="ts">
 import { computed } from '@vue/reactivity'
 import { createNamespace } from '@zi-shui/utils/create'
-import { ref, watch } from 'vue'
-import { TreeOption, treeProps, TreeNode, Key, treeEmits } from './tree'
+import { ref, watch, provide, useSlots } from 'vue'
+import {
+  TreeOption,
+  treeProps,
+  TreeNode,
+  Key,
+  treeEmits,
+  treeInjectKey
+} from './tree'
 import ZTreeNode from './tree-node.vue'
 
 const bem = createNamespace('tree')
@@ -203,4 +210,9 @@ function handleSelect(node: TreeNode) {
   }
   emit('update:selectedKeys', keys)
 }
+
+// 将插槽传递下去
+provide(treeInjectKey, {
+  slots: useSlots()
+})
 </script>
