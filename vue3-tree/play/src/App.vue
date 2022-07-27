@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 function createData(level = 4, parentKey = ''): any {
   if (!level) return []
-  const arr = new Array(6 - level).fill(0)
+  const arr = new Array(20 - level).fill(0)
   return arr.map((_, idx: number) => {
     const key = parentKey + level + idx
     return {
@@ -52,36 +52,35 @@ function createLabel(level: number): string {
 //   return ''
 // }
 
-// const data = ref(createData())
-// const data = ref(createData())
+const data = ref(createData())
 
-const data = ref<TreeOption[]>([
-  {
-    key: '0',
-    label: '0',
-    children: [
-      {
-        key: '0-0',
-        label: '0-0'
-      },
-      {
-        disabled: true, // 这个节点被禁用了
-        key: '0-1',
-        label: '0-1',
-        children: [
-          {
-            label: '0-1-0',
-            key: '0-1-0'
-          },
-          {
-            label: '0-1-1',
-            key: '0-1-1'
-          }
-        ]
-      }
-    ]
-  }
-])
+// const data = ref<TreeOption[]>([
+//   {
+//     key: '0',
+//     label: '0',
+//     children: [
+//       {
+//         key: '0-0',
+//         label: '0-0'
+//       },
+//       {
+//         disabled: true, // 这个节点被禁用了
+//         key: '0-1',
+//         label: '0-1',
+//         children: [
+//           {
+//             label: '0-1-0',
+//             key: '0-1-0'
+//           },
+//           {
+//             label: '0-1-1',
+//             key: '0-1-1'
+//           }
+//         ]
+//       }
+//     ]
+//   }
+// ])
 
 // const handleLoad = (node: TreeOption) => {
 //   // 内部肯定需要将展开的节点传递给我
