@@ -1,8 +1,8 @@
 <template>
   <div :class="bem.b()">
-    <z-virtual-list
+    <!-- <z-virtual-list
       :items="flattenTree"
-      :remain="8"
+      :remain="20"
       :size="35"
     >
       <template #default="{ node }">
@@ -21,7 +21,23 @@
         >
         </ZTreeNode>
       </template>
-    </z-virtual-list>
+    </z-virtual-list> -->
+    <ZTreeNode
+      v-for="node in flattenTree"
+      :key="node.key"
+      :node="node"
+      :expanded="isExpanded(node)"
+      :loadingKeys="loadingKeysRef"
+      :selectedKeys="selectKeysRef"
+      :show-checkbox="showCheckbox"
+      :checked="isChecked(node)"
+      :disabled="isDisabled(node)"
+      :indeterminate="isindeterminate(node)"
+      @toggle="toggleExpand"
+      @select="handleSelect"
+      @check="toggleCheck"
+    >
+    </ZTreeNode>
   </div>
 </template>
 
