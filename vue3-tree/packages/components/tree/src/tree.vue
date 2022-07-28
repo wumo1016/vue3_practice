@@ -195,7 +195,7 @@ watch(
   value => {
     if (value) {
       selectKeysRef.value = value
-      console.log(selectKeysRef.value)
+      // console.log(selectKeysRef.value)
     }
   },
   {
@@ -255,6 +255,7 @@ function toggle(node: TreeNode, checked: boolean) {
   }
   // 维护当前的key列表
   checkedKeys[checked ? 'add' : 'delete'](node.key)
+
   const children = node.children
   if (children) {
     children.forEach(childNode => {
