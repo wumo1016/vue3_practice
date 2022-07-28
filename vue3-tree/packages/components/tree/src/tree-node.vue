@@ -20,7 +20,6 @@
         </z-icon>
       </span>
 
-      {{ indeterminate }}
       <z-checkbox
         v-if="showCheckbox"
         :disabled="disabled"
