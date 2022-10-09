@@ -1,11 +1,6 @@
 import { createApp } from 'vue'
 
 import App from './app.vue'
+import router from './router'
 
-createApp(App).mount('#app')
-
-function test() {
-  console.log(123)
-}
-
-console.log(test())
+createApp(App).use(router).mount('#app')
