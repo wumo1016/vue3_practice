@@ -19,5 +19,11 @@ const getRoutes = () => {
 
 export default createRouter({
   history: createWebHistory(),
-  routes: getRoutes()
+  routes: [
+    {
+      path: '',
+      redirect: '/home'
+    },
+    ...getRoutes()
+  ]
 })
