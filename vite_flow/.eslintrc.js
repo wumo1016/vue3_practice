@@ -1,6 +1,6 @@
 module.exports = {
+  // 环境 针对那些环境的语法
   env: {
-    // 环境 针对那些环境的语法
     browser: true,
     es2021: true,
     node: true
@@ -12,7 +12,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // typescript 规则
     '@vue/prettier'
   ],
-  overrides: [],
   // 可以解析.vue 文件
   parser: 'vue-eslint-parser', // esprima babel-eslint @typescript-eslint/parser
   parserOptions: {
