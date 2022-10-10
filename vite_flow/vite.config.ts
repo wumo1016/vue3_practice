@@ -31,3 +31,6 @@ export default defineConfig({
 // pnpm i @types/node -D 解决使用node变量报错
 
 // vitest => 测试完后不会退出 vitest run => 测试完后直接退出
+
+// git remote add origin git地址
+// git push origin 分支
