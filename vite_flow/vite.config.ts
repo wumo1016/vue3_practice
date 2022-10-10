@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     jsx(),
     AutoImport({
-      imports: ['vue', 'vue-router'],
+      imports: ['vue', 'vue-router', 'pinia'],
       eslintrc: { enabled: false } // true 生成文件一次即可 并在eslint中加入配置(.eslintrc-auto-import.json) ts配置中加入(auto-imports.d.ts)
     })
   ],
