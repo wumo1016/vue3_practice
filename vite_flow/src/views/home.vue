@@ -1,12 +1,11 @@
 <template>
   <div>
-    <TodoList :todos="todos" />
+    <Todo />
   </div>
 </template>
 
 <script setup lang="ts">
-import TodoList from '@/components/todo-list'
-const todos = ref(['测试1'])
+import Todo from '@/components/todo/index.vue'
 </script>
 
 <style scoped></style>

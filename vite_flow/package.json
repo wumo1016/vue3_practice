@@ -6,25 +6,31 @@
   "scripts": {
     "start": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "lint": "eslint --fix --ext .ts,.tsx,.vue src --quiet"
+    "lint": "eslint --fix --ext .ts,.tsx,.vue src --quiet",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.1.2",
     "@types/node": "^18.8.3",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "@vitejs/plugin-vue": "^3.1.2",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
     "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/test-utils": "^2.1.0",
     "eslint": "^8.25.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.6.0",
+    "happy-dom": "^7.4.0",
     "prettier": "^2.7.1",
     "typescript": "^4.8.4",
     "unplugin-auto-import": "^0.11.2",
     "vite": "^3.1.6",
+    "vitest": "^0.24.0",
     "vue-tsc": "^1.0.0"
   },
   "dependencies": {

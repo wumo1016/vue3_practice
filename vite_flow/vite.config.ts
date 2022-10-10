@@ -1,3 +1,4 @@
+/// <reference types="vitest"/>
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import jsx from '@vitejs/plugin-vue-jsx'
@@ -15,6 +16,11 @@ export default defineConfig({
   ],
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }]
+  },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    transformMode: { web: [/.tsx$/] }
   }
 })
 
@@ -23,3 +29,5 @@ export default defineConfig({
 // "editor.defaultFormatter": "esbenp.prettier-vscode", // 使用 prettier 进行格式化
 
 // pnpm i @types/node -D 解决使用node变量报错
+
+// vitest => 测试完后不会退出 vitest run => 测试完后直接退出
