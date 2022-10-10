@@ -18,4 +18,8 @@ export default defineConfig({
   }
 })
 
+// pritter 需要加入以下两条配置
+// "editor.formatOnSave": true, // 保存时格式化代码
+// "editor.defaultFormatter": "esbenp.prettier-vscode", // 使用 prettier 进行格式化
+
 // pnpm i @types/node -D 解决使用node变量报错
