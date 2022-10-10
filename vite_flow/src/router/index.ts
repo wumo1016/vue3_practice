@@ -7,7 +7,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 const getRoutes = () => {
   // import.meta.glob(vite语法) 需要在声明文件中引入 /// <reference types="vite/client" />
   const files = import.meta.glob('../views/*.vue')
-  console.log(files)
   return Object.entries(files).map(([file, module]) => {
     const name = file.match(/\.\.\/views\/([^.]+?)\.vue/i)?.[1]
     return {

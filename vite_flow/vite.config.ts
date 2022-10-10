@@ -21,6 +21,16 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     transformMode: { web: [/.tsx$/] }
+  },
+  server: {
+    // http-proxy做的
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true, // 这里不加服务端无法拿到origin属性
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })
 

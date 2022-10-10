@@ -35,8 +35,7 @@ class HttpRequest {
         if (code !== 0) {
           return Promise.reject(res)
         }
-
-        // 401 403 404
+        // 401 403 404 判断
         return res
       },
       (err) => {
